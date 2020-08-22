@@ -1,0 +1,204 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            {% if user.is_active %}
+                <h3>{{user.username}} 님의</h3>
+            {% else %}
+                <h3>Unknown 님의</h3>
+            {% endif %}
+            <h2>play list</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Events Area Start ##### -->
+            <div style="float: right; margin-left: 50px;">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <span class="caret">Action</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+
+                <div style="height: 62px;"></div>
+                <div class="single-event-area mb-30">
+                    <div class="event-text">
+                        <div class="btn-group">
+                            <p class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" style="border:none;"> 플레이 리스트</p>
+                            <!--<button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                                <!--플레이 리스트-->
+                            <!--</button>-->
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div> <!-- class btn-group -->
+                    </div>
+                </div>
+
+                <div class="single-event-area mb-30">
+                    <div class="event-text">
+                        <h4>1234</h4>
+                        <div class="event-meta-data">
+                            <a href="#" class="event-place">VIP Sala</a>
+                            <a href="#" class="event-date">June 15, 2018</a>
+                        </div>
+                        <a href="#" class="btn see-more-btn">See Event</a>
+                    </div>
+                </div>
+
+                <div class="single-event-area mb-30">
+                    <div class="event-text">
+                        <h4>12</h4>
+                        <div class="event-meta-data">
+                            <a href="#" class="event-place">Gold Arena</a>
+                            <a href="#" class="event-date">June 15, 2018</a>
+                        </div>
+                        <a href="#" class="btn see-more-btn">See Event</a>
+                    </div>
+                </div>
+
+                <div class="single-event-area mb-30">
+                    <div class="event-text">
+                        <h4>새로운 리스트 추가</h4>
+                        <a href="#" class="btn see-more-btn">click here</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+    <section class="events-area section-padding-100">
+                <div style="left: auto">
+                    <div class="row">
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e1.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>hi</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">VIP Sala</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e2.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>hi2</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">Gold Arena</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e3.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>dd</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">Space Ibiza</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e4.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>123</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">VIP Sala</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e5.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>The Mission</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">Gold Arena</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            <img src="{% static 'plist/img/bg-img/e6.jpg' %}" alt="">
+                        </div>
+                        <div class="event-text">
+                            <h4>ibiza</h4>
+                            <div class="event-meta-data">
+                                <a href="#" class="event-place">Space Ibiza</a>
+                                <a href="#" class="event-date">June 15, 2018</a>
+                            </div>
+                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center mt-70">
+                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ##### Events Area End ##### -->
+
+{% endblock %}

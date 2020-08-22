@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+{% load bootstrap4 %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Make Your Own Playlist</p>
+            <h2>Register New Song</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Show Your Favorite Song From Youtube</h3>
+                        <!-- Register Form -->
+                        <div class="login-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <button type="submit" class="btn oneMusic-btn mt-30">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Login Area End ##### -->
+{% endblock %}

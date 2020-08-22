@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -20,23 +21,25 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-)rf+om)1p77rym_b*#=9y!cbx1-#r-k3d3n5+)$)@5=8m6s=1'
+SECRET_KEY = '4a$ih&pfc@uil&u9)fziuksbr#4h3_dy90hni4ub&nqogj5^^#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'plist',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +78,25 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'project_db', # DB명
+    'USER': 'python', # 데이터베이스 계정
+    'PASSWORD':'python', # 계정 비밀번호
+    'HOST':'localhost', # 데이테베이스 IP
+    'PORT':'3306', # 데이터베이스 port
+    'OPTIONS': {
+            'charset': 'utf8'  # This is the important line
+            }
     }
+    # MongoDB 연동
+    # 'default': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': 'project_db',
+    #     'USER': 'project',  # 데이터베이스 계정
+    #     'PASSWORD': 'project',  # 계정 비밀번호
+    #     'HOST': '192.168.0.12',  # 데이테베이스 주소(IP)
+    #     'PORT': '27017',  # 데이터베이스 포트(보통은 27017)
+    # }
 }
 
 
@@ -103,9 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -118,3 +137,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
+LOGIN_REDIRECT_URL = '/'

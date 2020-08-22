@@ -1,0 +1,102 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            {% if user.is_active %}
+                <h3>{{user.username}} 님의</h3>
+            {% else %}
+                <h3>Unknown 님의</h3>
+            {% endif %}
+            <h2>play list</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Song List Area Start ##### -->
+    <section class="events-area section-padding-100">
+        <div class="row">
+            <!-- ##### Song Area Start ##### -->
+            <div class="col-8" style="margin-left:10px">
+                <div class="one-music-songs-area mb-70">
+                    <!-- row start -->
+                    <div class="row">
+                        {% for song in song_list %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                        <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                            <p>{{song.song_title}}</p>
+                                        </div>
+                                        <audio preload="auto" controls>
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div> <!-- row end -->
+                </div>
+            </div>
+            <!-- ##### Song Area end ##### -->
+
+            <!-- ##### Playlist Start ##### -->
+            <div class="col-3" style="min-width:200px;">
+                <!-- ##### 아코디언 리스트 ##### -->
+                <div class="col-12 col-lg-12">
+                    <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Playlist 1
+                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    </a></h6>
+                            <div id="collapseOne" class="accordion-content collapse show">
+                                <p>take your lie whenever let me go</p>
+                            </div>
+                        </div>
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6>
+                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Playlist 2
+                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        </a>
+                            </h6>
+                            <div id="collapseTwo" class="accordion-content collapse">
+                                <p>어떤 날은 그랬지 구름위를 걸었지</p>
+                            </div>
+                        </div>
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6>
+                                <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">Playlist 3
+                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    </a>
+                            </h6>
+                            <div id="collapseThree" class="accordion-content collapse">
+                                <p>멀리 멀리 아주멀리 날아가버린</p>
+                            </div>
+                        </div>
+                       <div class="single-event-area mb-30">
+                           <div class="event-text">
+                               <h4>New Playlist</h4>
+                               <a href="#" class="btn see-more-btn">플레이리스트 추가</a>
+                           </div>
+                       </div>
+                    </div>
+                </div> <!-- ##### 아코디언 리스트 끝 ##### -->
+            </div>
+            <!-- ##### Playlist End ##### -->
+        </div>
+    </section>
+    <!-- ##### Song List Area End ##### -->
+
+{% endblock %}
