@@ -51,15 +51,18 @@
     </section>
 
     <!-- ##### Breadcumb Area End ##### -->
-    <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mpeg">
+    <section>
+        <audio id="audio" preload="auto" tabindex="0" controls="" type="audio/mpeg">
         <source type="audio/mp3" src="/static/plist/audio/Someday You Know.mp3">
         Sorry, your browser does not support HTML5 audio.
-    </audio>
-    <ul id="playlist">
-        <li class="active"><a href="#">Ravel Bolero</a></li>
-        <li><a href="{% url 'song_detail' pk=1 %}">Teddy Bear Rises</a></li>
-        <li><a href="{% url 'song_detail' pk=2 %}">Someday You Know</a></li>
-        <li><a href="{% url 'song_detail' pk=3 %}">Hello</a></li>
-    </ul>
+        </audio>
+        <ul id="playlist">
+            <li class="active"><a href="http://localhost:8000/static/plist/audio/Someday You Know.mp3">Someday You Know</a></li>
+            <li><a href="http://localhost:8000/static/plist/audio/Teddy Bear Rises.mp3">Teddy Bear Rises</a></li>
+            <li><a href="http://localhost:8000/static/plist/audio/test.mp3">test</a></li>
+            <li><a href="http://localhost:8000/static/plist/audio/Hello.mp3">Hello</a></li>
+
+        </ul>
+    </section>
 
 {% endblock %}
