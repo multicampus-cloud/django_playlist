@@ -12,6 +12,7 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('contact/', views.contact, name='contact'),
     path('element/', views.element, name='element'),
-    path('song_new/', views.song_new, name='song_new'),
+    path('song/new/', views.song_new, name='song_new'),
+    path('song/<int:pk>/', views.song_detail, name='song_detail'),
     path('mypage/playlist/', views.playlist, name='playlist'),
 ]

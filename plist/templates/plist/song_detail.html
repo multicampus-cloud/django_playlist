@@ -1,0 +1,101 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Make Your Own Playlist</p>
+            <h2>Song Detail</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Featured Artist Area Start ##### -->
+    <section class="blog-area section-padding-100">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-12 col-lg-9 bg-img bg-overlay bg-fixed" style="padding-bottom:30px;margin-bottom:20px;background-image: url({% static 'plist/img/bg-img/bg-4.jpg' %});">
+                    <div class="col-12 col-lg-8" style="margin:auto;">
+                        <div class="featured-artist-thumb">
+                            <img src={% static "plist/img/bg-img/fa.jpg"%} alt="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-9 col-lg-7" style="margin:auto;">
+                        <div class="featured-artist-content">
+                            <!-- Section Heading -->
+                            <div class="section-heading white text-left mb-30">
+                                <h2>{{song.song_title}}</h2>
+                                <h6 style="color:white">{{song.song_artist}}</h6>
+                            </div>
+                            <p>song url : <a href="{{song.song_url}}" style="color:white;">{{song.song_url}}</a></p>
+                            <p> song start time : {{song.song_start}}</p>
+                            <p> song end time : {{song.song_end}}</p>
+                            <p>song deatail : {{song.song_detail}}</p>
+                            <div class="song-play-area">
+                                <div class="song-name">
+                                    <p>{{song.song_title}}</p>
+                                </div>
+                                <audio autoplay="autoplay" preload="auto" controls="controls">
+                                    <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3">
+                    <div class="blog-sidebar-area">
+
+                        <!-- Widget Area -->
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Categories</h5>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li><a href="#">{{genre}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Widget Area -->
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Tags</h5>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="tags">
+                                    <li><a href="#">{{tag}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Recommend Playlist in Youtube</h5>
+                            </div>
+                            <div class="widget-content">
+                                {% for recommend in recommend_list%}
+                                    {% for title, url in recommend.items %}
+                                        <ul>
+                                            <li>{{title}}</li>
+                                            <li><a href="{{url}}">{{url}}</a></li>
+                                            <br><br>
+                                        </ul>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Featured Artist Area End ##### -->
+
+
+    <!-- ##### Blog Area End ##### -->
+
+{% endblock %}

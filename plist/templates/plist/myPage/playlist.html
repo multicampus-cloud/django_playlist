@@ -23,24 +23,31 @@
                 <div class="one-music-songs-area mb-70">
                     <!-- row start -->
                     <div class="row">
-                        {% for song in song_list %}
-                            <div class="col-12">
-                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                                    <div class="song-thumbnail">
-                                        <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
-                                    </div>
-                                    <div class="song-play-area">
-                                        <div class="song-name">
-                                            <p>{{song.song_title}}</p>
+                        {% if user.is_active %}
+                            {% for song in song_list %}
+                                <div class="col-12">
+                                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                        <div class="song-thumbnail">
+                                            <a href="{% url 'song_detail' pk=song.pk%}">
+                                                <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                            </a>
                                         </div>
-                                        <audio preload="auto" controls>
-                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
-                                        </audio>
+                                        <div class="song-play-area">
+                                            <div class="song-name">
+                                                <a href="{% url 'song_detail' pk=song.pk%}">
+                                                    <p>{{song.song_title}}</p>
+                                                </a>
+                                            </div>
+                                            <audio preload="auto" controls="controls">
+                                                <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                            </audio>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-
+                            {% endfor %}
+                        {% else %}
+                            로그인 해주세요
+                        {% endif %}
                     </div> <!-- row end -->
                 </div>
             </div>

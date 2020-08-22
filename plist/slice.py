@@ -9,10 +9,17 @@ def find_sec(input_time):
     input_time = str(input_time)
     print(input_time)
     min_sec = input_time.split(':')
-    min = int(min_sec[0])
-    sec = int(min_sec[1])
-    print(min,sec)
-    return int(min) * 60 * 1000 + (int(sec)-1) * 1000
+
+    if len(min_sec) ==3 :
+        hour = int(min_sec[0])
+        min = int(min_sec[1])
+        sec = int(min_sec[2])
+    else :
+        hour = 0
+        min = int(min_sec[0])
+        sec = int(min_sec[1])
+
+    return int(hour)*60*60*1000 + int(min) * 60 * 1000 + int(sec) * 1000
 
 # print(find_sec('9:10'))
 

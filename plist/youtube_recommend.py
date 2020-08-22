@@ -3,43 +3,42 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import re
 
-url = 'https://www.youtube.com/watch?v=Bl4dfyDTXmU'
+def recommend_song_list(url):
 
-req_headers = {
-    'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'
-}
+    recommend_list = []
 
-response = requests.get(url,headers=req_headers)
-print(response.status_code)
+    req_headers = {
+        'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'
+    }
 
+    response = requests.get(url, headers=req_headers)
+    #print(response.status_code)
 
-html = response.text
-soup = BeautifulSoup(html,'html.parser')
-#
-# print(soup)
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+    # print(soup)
 
+    #정규식
+    regex_filter = r'title":{"accessibility".*?"commandMetadata":{"webCommandMetadata":{"url":"/watch\?v=.*?"'
 
-regex_filter = r'title":{"accessibility".*?"commandMetadata":{"webCommandMetadata":{"url":"/watch\?v=.*?"'
+    song_list = re.findall(regex_filter, str(soup))
 
-regex_list = re.findall(r'title":{"accessibility".*?"commandMetadata":{"webCommandMetadata":{"url":"/watch\?v=.*?"',str(soup))
+    for song in song_list[:3]:
+        recommend = {}
+        song = re.sub('title":{"accessibility":{"accessibilityData":{"label":"','',str(song))
+        title = re.split('게시자',str(song))
 
+        sub_link = re.split('"commandMetadata":{"webCommandMetadata":{"url":"',str(song))[-1]
+        link = urljoin('https://www.youtube.com', sub_link)
 
-# for regex in regex_list:
-#     print(regex)
-#     print("="*100)
+        recommend[title[0]] = link
+        recommend_list.append(recommend)
 
-
-for regex in regex_list[:3]:
-    print(regex)
-    regex = re.sub('title":{"accessibility":{"accessibilityData":{"label":"','',str(regex))
-    title = re.split('게시자',str(regex))
-    print(title[0])
-    url = re.split('"commandMetadata":{"webCommandMetadata":{"url":"',str(regex))[-1]
-    #print(url)
-    link = urljoin('https://www.youtube.com', url)
-    print(link)
-    print("="*100)
+    return recommend_list
 
 
+if __name__ == '__main__':
+    tests = recommend_song_list('https://www.youtube.com/watch?v=Bl4dfyDTXmU')
 
-
+    for test in tests:
+        print(test)
