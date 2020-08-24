@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth import views, models, login, authenticate
+from .documents import SongDocument
 
 
 
@@ -87,15 +88,15 @@ def song_new(request):
             song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
             # db에 넣기
-            # song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
-            #                            song_artist=form.cleaned_data['song_artist'], \
-            #                            song_url=form.cleaned_data['song_url'],
-            #                            song_genre=form.cleaned_data['song_genre'], \
-            #                            song_start=form.cleaned_data['song_start'], \
-            #                            song_end=form.cleaned_data['song_end'], \
-            #                            song_tag=form.cleaned_data['song_tag'], \
-            #                            song_detail=form.cleaned_data['song_detail'],\
-            #                            )
+            song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
+                                       song_artist=form.cleaned_data['song_artist'], \
+                                       song_url=form.cleaned_data['song_url'],
+                                       song_genre=form.cleaned_data['song_genre'], \
+                                       song_start=form.cleaned_data['song_start'], \
+                                       song_end=form.cleaned_data['song_end'], \
+                                       song_tag=form.cleaned_data['song_tag'], \
+                                       song_detail=form.cleaned_data['song_detail'],\
+                                       )
             return redirect('index')
         else:
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
@@ -151,3 +152,11 @@ def playlist(request):
     song_list = Song.objects.all()
     #print('playlist',song_list)
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
+
+def search(request):
+    q = request.GET.get('q')
+    if q:
+        songs = SongDocument.search().query('match',song_title=q)
+    else:
+        songs = ''
+    return render(request, 'plist/album.html',{'songs':songs})
