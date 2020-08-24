@@ -82,20 +82,20 @@ def song_new(request):
 
             # 파일뽑아내는 작업
             download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
-            
+
             # 파일 자르는 작업
             song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
             # db에 넣기
-            # song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
-            #                            song_artist=form.cleaned_data['song_artist'], \
-            #                            song_url=form.cleaned_data['song_url'],
-            #                            song_genre=form.cleaned_data['song_genre'], \
-            #                            song_start=form.cleaned_data['song_start'], \
-            #                            song_end=form.cleaned_data['song_end'], \
-            #                            song_tag=form.cleaned_data['song_tag'], \
-            #                            song_detail=form.cleaned_data['song_detail'],\
-            #                            )
+            song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
+                                       song_artist=form.cleaned_data['song_artist'], \
+                                       song_url=form.cleaned_data['song_url'],
+                                       song_genre=form.cleaned_data['song_genre'], \
+                                       song_start=form.cleaned_data['song_start'], \
+                                       song_end=form.cleaned_data['song_end'], \
+                                       song_tag=form.cleaned_data['song_tag'], \
+                                       song_detail=form.cleaned_data['song_detail'],\
+                                       )
             return redirect('index')
         else:
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
