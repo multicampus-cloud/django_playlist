@@ -1,0 +1,23 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+
+<div class="col-3" style="min-width:200px;">
+    <!-- ##### 아코디언 리스트 ##### -->
+    <div class="col-12 col-lg-12">
+        <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
+            <!-- single accordian area -->
+            <div class="panel single-accordion">
+                <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Playlist 1
+                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                        </a></h6>
+                <div id="collapseOne" class="accordion-content collapse show">
+                    <p>take your lie whenever let me go</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

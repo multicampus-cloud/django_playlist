@@ -95,7 +95,7 @@
                        <div class="single-event-area mb-30">
                            <div class="event-text">
                                <h4>New Playlist</h4>
-                               <a href="#" class="btn see-more-btn">플레이리스트 추가</a>
+                               <a href="#" class="btn see-more-btn"><button id="newItem">플레이리스트 추가</button></a>
                            </div>
                        </div>
                     </div>
@@ -106,4 +106,26 @@
     </section>
     <!-- ##### Song List Area End ##### -->
 
+{% endblock %}
+{% block jquery %}
+    <script>
+        $(function(){
+            
+            console.log($single_accordion);
+            
+            $('#newItem').on('click', function(e){
+                e.preventDefault();
+                var $single_accordion = $("<div class='panel single-accordion'>\
+                <h6><a role='button' class='' aria-expanded='true' aria-controls='collapseOne' data-toggle='collapse' data-parent='#accordion' href='#collapseOne'>Playlist 1\
+                                    <span class='accor-open'><i class='fa fa-plus' aria-hidden='true'></i></span>\
+                                    <span class='accor-close'><i class='fa fa-minus' aria-hidden='true'></i></span>\
+                                    </a></h6>\
+                            <div id='collapseOne' class='accordion-content collapse show'>\
+                                <p>take your lie whenever let me go</p>\
+                            </div>\
+                        </div>");
+                $('.single-accordion:last').after($single_accordion);
+            });
+        });
+    </script>
 {% endblock %}

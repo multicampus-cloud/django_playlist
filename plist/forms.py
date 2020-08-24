@@ -1,6 +1,6 @@
 from django import forms
-from .models import Song
-from django.contrib.auth.models import User 
+from .models import Song, Playlist
+from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
@@ -16,9 +16,6 @@ class LoginForm(forms.ModelForm):
 
 
 class SongForm(forms.ModelForm):
-    # class Meta:
-    #     model = Song
-    #     fields = ('song_title','song_artist',)
     class Meta:
         model = Song
         fields = ('song_title','song_artist','song_url','song_genre'\

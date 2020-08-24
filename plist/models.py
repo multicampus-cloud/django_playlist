@@ -49,7 +49,7 @@ class Song(models.Model):
 class Playlist(models.Model):
     # 작성자
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)  # ForeignKey 는 class
-    # Playlist 제목
+    # playlist 제목
     play_title = models.CharField(max_length=200)
     # song_list
     play_list = models.CharField(max_length=200)
