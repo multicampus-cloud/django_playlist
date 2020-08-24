@@ -17,6 +17,9 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href={% static "plist/style.css" %}>
 
+    <script type="text/javascript" src={% static "plist/js/jquery/jquery-3.3.1.min.js"%}></script>
+    <script> var $j = jQuery.noConflict(); </script>
+
 </head>
 
 <body>
@@ -165,7 +168,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
     <script type="text/javascript" src={% static "plist/js/jquery/jquery-2.2.4.min.js"%}></script>
-    <script> var $ = jQuery.noConflict(); </script>
     <!-- Popper js -->
     <script type="text/javascript" src={% static "plist/js/bootstrap/popper.min.js"%}></script>
     <!-- Bootstrap js -->
@@ -174,6 +176,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script type="text/javascript" src={% static "plist/js/plugins/plugins.js"%}></script>
     <!-- Active js -->
     <script type="text/javascript" src={% static "plist/js/active.js"%}></script>
+    {% block jquery %}
+    {% endblock %}
 
 </body>
 

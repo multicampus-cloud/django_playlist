@@ -82,7 +82,7 @@ def song_new(request):
 
             # 파일뽑아내는 작업
             download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
-            
+
             # 파일 자르는 작업
             song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
