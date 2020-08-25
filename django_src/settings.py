@@ -89,7 +89,7 @@ DATABASES = {
     'NAME': 'project_db', # DB명
     'USER': 'project', # 데이터베이스 계정
     'PASSWORD':'project', # 계정 비밀번호
-    'HOST':'192.168.0.12', # 데이테베이스 IP
+    'HOST':'172.30.1.31', # 데이테베이스 IP
     'PORT':'3306', # 데이터베이스 port
     'OPTIONS': {
             'charset': 'utf8'  # This is the important line
