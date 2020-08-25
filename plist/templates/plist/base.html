@@ -62,7 +62,12 @@
                             <div class="classynav">
                                 <ul>
                                     <li><a href="{% url 'index' %}">Home</a></li>
-                                    <li><a href="{% url 'album' %}">All song</a></li>
+                                    <li><a href="#">All song</a>
+                                            <ul class="dropdown">
+                                                <li><a href="{% url 'title' %}">title</a></li>
+                                                <li><a href="{% url 'artist' %}">artist</a></li>
+                                            </ul>
+                                    </li>
                                     <li><a href="{% url 'blog' %}">Search</a>
                                             <ul class="dropdown">
                                                     <li><a href="#">장르</a>

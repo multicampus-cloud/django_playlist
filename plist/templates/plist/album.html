@@ -15,31 +15,7 @@
     <!-- ##### Album Catagory Area Start ##### -->
     <section class="album-catagory section-padding-100-0">
         <div class="container">
-             <form method="get">
-                <input id="q" name="q" type="text" placeholder="your search..."/>
-            </form>
-            {% for song in songs %}
-                {{ song.song_title }}
-                {{ song.song_artist }}
-                <br>
-                <div class="col-12">
-                                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                                        <div class="song-thumbnail">
-                                                <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="song-play-area">
-                                            <div class="song-name">
-                                                    <p>{{song.song_title}}</p>
-                                                </a>
-                                            </div>
-                                            <audio preload="auto" controls="controls">
-                                                <source src="/static/plist/audio/{{song.song_title}}.mp3">
-                                            </audio>
-                                        </div>
-                                    </div>
-                                </div>
-            {% endfor %}
+
             <div class="row">
                 <div class="col-12">
                     <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">

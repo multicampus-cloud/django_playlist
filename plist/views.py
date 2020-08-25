@@ -153,10 +153,29 @@ def playlist(request):
     #print('playlist',song_list)
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
 
-def search(request):
+
+def search_title(request):
     q = request.GET.get('q')
     if q:
         songs = SongDocument.search().query('match',song_title=q)
     else:
         songs = ''
-    return render(request, 'plist/album.html',{'songs':songs})
+    return render(request, 'plist/title.html',{'songs':songs})
+
+
+def search_artist(request):
+    a = request.GET.get('a')
+    if a:
+        singer = SongDocument.search().query('match',song_artist=a)
+    else:
+        singer = ''
+    return render(request, 'plist/artist.html', {'singer':singer})
+
+
+def search_genre(request):
+    g = request.GET.get('g')
+    if g:
+        genre = SongDocument.search().query('match',song_genre=g)
+    else:
+        singer = ''
+    return render(request, 'plist/blog.html', {'genre':genre})
