@@ -45,6 +45,17 @@ class Song(models.Model):
     def __str__(self):
         return self.song_title + '('+self.song_artist+')'
 
+    def indexing(self):
+        obj = SongDocument(
+        song_title= self.song_title,
+        song_artist = self.song_artist,
+        song_url = self.song_url,
+        song_genre = self.song_genre,
+        song_tag = self.song_tag,
+        song_detail = self.song_detail,
+        )
+        obj.save()
+        return obj.to_dict(include_meta=True)
 
 class Playlist(models.Model):
     # 작성자

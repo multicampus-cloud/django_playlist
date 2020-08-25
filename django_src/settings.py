@@ -40,7 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_elasticsearch_dsl',
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,7 +89,7 @@ DATABASES = {
     'NAME': 'project_db', # DB명
     'USER': 'project', # 데이터베이스 계정
     'PASSWORD':'project', # 계정 비밀번호
-    'HOST':'192.168.0.12', # 데이테베이스 IP
+    'HOST':'172.30.1.31', # 데이테베이스 IP
     'PORT':'3306', # 데이터베이스 port
     'OPTIONS': {
             'charset': 'utf8'  # This is the important line
@@ -139,3 +146,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 LOGIN_REDIRECT_URL = '/'
+
