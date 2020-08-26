@@ -20,6 +20,7 @@ Pillow==7.2.0
 prompt-toolkit==3.0.6
 pydub==0.24.1
 Pygments==2.6.1
+PyMySQL==0.10.0
 pytz==2020.1
 requests==2.24.0
 six==1.15.0
