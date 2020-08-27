@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth import views, models, login, authenticate
+from .documents import SongDocument
 
 
 GENRE_CHOICES = (
@@ -147,3 +148,30 @@ def element(request):
 def playlist(request):
     song_list = Song.objects.all()
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
+
+
+def search_title(request):
+    q = request.GET.get('q')
+    if q:
+        songs = SongDocument.search().query('match',song_title=q)
+    else:
+        songs = ''
+    return render(request, 'plist/title.html',{'songs':songs})
+
+
+def search_artist(request):
+    a = request.GET.get('a')
+    if a:
+        singer = SongDocument.search().query('match',song_artist=a)
+    else:
+        singer = ''
+    return render(request, 'plist/artist.html', {'singer':singer})
+
+
+def search_genre(request):
+    g = request.GET.get('g')
+    if g:
+        genre = SongDocument.search().query('match',song_genre=g)
+    else:
+        singer = ''
+    return render(request, 'plist/blog.html', {'genre':genre})
