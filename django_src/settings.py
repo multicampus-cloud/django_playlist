@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': '172.30.1.25:9200'
+        'hosts': 'localhost:9200'
     },
 }
 
@@ -146,4 +146,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 LOGIN_REDIRECT_URL = '/'
-
