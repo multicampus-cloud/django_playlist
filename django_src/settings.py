@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+
 from pathlib import Path
 import os
 
@@ -32,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # CORS
+    'corsheaders',
     'plist',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +53,8 @@ ELASTICSEARCH_DSL = {
 }
 
 MIDDLEWARE = [
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +82,30 @@ TEMPLATES = [
     },
 ]
 
+# CORS
+CORS_ORIGIN_ALLOW_ALL=True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 WSGI_APPLICATION = 'django_src.wsgi.application'
 
 
@@ -84,6 +113,17 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    # 'ENGINE': 'django.db.backends.mysql',
+    # 'NAME': 'project_db', # DB명
+    # 'USER': 'project', # 데이터베이스 계정
+    # 'PASSWORD':'project', # 계정 비밀번호
+    # 'HOST':'192.168.0.12', # 데이테베이스 IP
+    # 'PORT':'3306', # 데이터베이스 port
+    # 'OPTIONS': {
+    #         'charset': 'utf8'  # This is the important line
+    #         }
+    # }
     'default': {
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'project_db', # DB명
@@ -95,6 +135,7 @@ DATABASES = {
             'charset': 'utf8'  # This is the important line
             }
     }
+
     # MongoDB 연동
     # 'default': {
     #     'ENGINE': 'djongo',

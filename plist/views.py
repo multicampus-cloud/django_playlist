@@ -12,8 +12,6 @@ from django.contrib.auth import views, models, login, authenticate
 from .documents import SongDocument
 
 
-
-
 GENRE_CHOICES = (
     ('', 'Select Genre'),
     ('0', '가요'),  # First one is the value of select option and second is the displayed value in option
@@ -75,7 +73,6 @@ def signup(request):
 
 # new song 만들기
 def song_new(request):
-    print('song_new')
     if request.method == "POST":
         form = SongForm(request.POST)
         if form.is_valid():
@@ -150,7 +147,6 @@ def element(request):
 # mypage 안에 my playlist 가져오기(모든 노래가져오기)
 def playlist(request):
     song_list = Song.objects.all()
-    #print('playlist',song_list)
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
 
 
