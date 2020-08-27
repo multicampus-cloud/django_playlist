@@ -1,4 +1,4 @@
-from .forms import SongForm,UserForm, LoginForm
+from .forms import SongForm, SongSliceForm, UserForm, LoginForm
 from .models import Song
 from .download import download_video_and_subtitle
 from .slice import find_sec, song_slice
@@ -79,26 +79,42 @@ def song_new(request):
 
             # 파일뽑아내는 작업
             download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
+            song_title = form.cleaned_data['song_title']
+            form = SongSliceForm(request.POST)
+            return render(request, 'plist/song_new_slice.html', {'form': form ,'song_title':song_title})
+        else:
+            return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
+    else:
+        form = SongForm()
+        return render(request, 'plist/song_new.html', {'form': form})
+
+
+def song_new_slice(request, pk):
+    if request.method == "POST":
+        form = SongSliceForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
 
             # 파일 자르는 작업
-            song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
+            song_slice(form.cleaned_data['song_title'], form.cleaned_data['song_start'], form.cleaned_data['song_end'])
 
             # db에 넣기
-            song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
+            song = Song.objects.create(song_title=form.cleaned_data['song_title'], \
                                        song_artist=form.cleaned_data['song_artist'], \
                                        song_url=form.cleaned_data['song_url'],
                                        song_genre=form.cleaned_data['song_genre'], \
                                        song_start=form.cleaned_data['song_start'], \
                                        song_end=form.cleaned_data['song_end'], \
                                        song_tag=form.cleaned_data['song_tag'], \
-                                       song_detail=form.cleaned_data['song_detail'],\
+                                       song_detail=form.cleaned_data['song_detail'], \
                                        )
-            return redirect('index')
+
+            return redirect('playlist')
         else:
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
     else:
-        form = SongForm()
-        return render(request, 'plist/song_new.html', {'form': form})
+        form = SongSliceForm()
+        return render(request, 'plist/song_new_slice.html', {'form': form})
 
 
 def song_detail(request,pk):

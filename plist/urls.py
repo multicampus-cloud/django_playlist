@@ -13,6 +13,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('element/', views.element, name='element'),
     path('song/new/', views.song_new, name='song_new'),
+    path('song/new/slice', views.song_new_slice, name='song_new_slice'),
     path('song/<int:pk>/', views.song_detail, name='song_detail'),
     path('mypage/playlist/', views.playlist, name='playlist'),
 ]

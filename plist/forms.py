@@ -18,6 +18,22 @@ class LoginForm(forms.ModelForm):
 class SongForm(forms.ModelForm):
     class Meta:
         model = Song
+        fields = ['song_title', 'song_artist', 'song_url']
+        widgets = {
+            'song_title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '영어이름만 저장 가능'}),
+            'song_artist': forms.TextInput(attrs={'class': 'form-control'}),
+            'song_url': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'song_title': '노래 제목',
+            'song_artist': '가수',
+            'song_url': 'Youtube URL',
+        }
+
+
+class SongSliceForm(forms.ModelForm):
+    class Meta:
+        model = Song
         fields = ('song_title','song_artist','song_url','song_genre'\
                   ,'song_tag','song_start','song_end','song_detail',)
         GENRE_CHOICES = (
@@ -43,9 +59,9 @@ class SongForm(forms.ModelForm):
         )
         widgets = {
             'song_genre': forms.Select(choices=GENRE_CHOICES, attrs={'class': 'form-control'}),
-            'song_title': forms.TextInput(attrs={'class': 'form-control','placeholder':'영어이름만 저장 가능'}),
-            'song_artist': forms.TextInput(attrs={'class': 'form-control'}),
-            'song_url': forms.TextInput(attrs={'class': 'form-control'}),
+            'song_title': forms.TextInput(attrs={'class': 'form-control','readonly':'readonly'}),
+            'song_artist': forms.TextInput(attrs={'class': 'form-control','readonly':'readonly'}),
+            'song_url': forms.TextInput(attrs={'class': 'form-control','readonly':'readonly'}),
             'song_tag': forms.Select(choices=TAG_CHOICES, attrs={'class': 'form-control'}),
             'song_start': forms.TextInput(attrs={'class': 'form-control'}),
             'song_end': forms.TextInput(attrs={'class': 'form-control'}),
