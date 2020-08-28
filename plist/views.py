@@ -3,13 +3,15 @@ from .models import Song
 from .download import download_video_and_subtitle
 from .slice import find_sec, song_slice
 from .youtube_recommend import recommend_song_list
+from .documents import SongDocument
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth import views, models, login, authenticate
-from .documents import SongDocument
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 GENRE_CHOICES = (
@@ -72,17 +74,18 @@ def signup(request):
 
 
 # new song 만들기
+@login_required
 def song_new(request):
     if request.method == "POST":
         form = SongForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
+            # print(form.cleaned_data)
 
             # 파일뽑아내는 작업
-            download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
+            # download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
 
             # 파일 자르는 작업
-            song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
+            # song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
             # db에 넣기
             song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
@@ -108,7 +111,7 @@ def song_detail(request,pk):
     song_genre = GENRE_CHOICES[int(song.song_genre)]
     # 추천 노래 리스트 받아오기
     recommend_list = recommend_song_list(song.song_url)
-    print(recommend_list)
+    # print(recommend_list)
     return render(request, 'plist/song_detail.html', \
                   {'song': song,'genre':song_genre[1], 'tag':song_tag[1],\
                    'recommend_list':recommend_list})
@@ -117,11 +120,6 @@ def song_detail(request,pk):
 # 메인 페이지
 def index(request):
     return render(request, 'plist/index.html')
-
-
-# 로그인 페이지
-def login(request):
-    return render(request, 'plist/login.html')
 
 
 def album(request):
@@ -145,8 +143,22 @@ def element(request):
 
 
 # mypage 안에 my playlist 가져오기(모든 노래가져오기)
+@login_required
 def playlist(request):
+    # 페이지 별로 구분해서 리스트 출력하기
     song_list = Song.objects.all()
+    # song_list 목록에서 한페이지당 2개씩 할당
+    paginator = Paginator(song_list, 6)
+    # page 받아오기
+    page = request.GET.get('page')
+
+    try:
+        song_list = paginator.page(page)
+    except PageNotAnInteger:
+        song_list = paginator.page(1)
+    except EmptyPage:
+        song_list = paginator.page(paginator.num_pages)
+
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
 
 

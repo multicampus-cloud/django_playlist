@@ -45,8 +45,10 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                        {% else %}
-                            로그인 해주세요
+                            <!--  pagination.html 추가  -->
+                            <div class="col-12">
+                                {% include 'plist/pagination.html' with page=song_list %}
+                            </div>
                         {% endif %}
                     </div> <!-- row end -->
                 </div>
