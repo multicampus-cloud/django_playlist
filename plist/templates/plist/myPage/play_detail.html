@@ -1,0 +1,102 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+    <style>
+        #playlist .active a{color:#5DB0E6;text-decoration:none;}
+        #playlist li a,#playlist_detail li a{color:darkslategray;padding:5px;display:block;}
+        #playlist li a:hover{text-decoration:none;}
+    </style>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Play Your Own Playlist</p>
+            <h2>{{ play_detail_list.play_title }}</h2>
+            <p>{{ play_detail_list.play_detail }}</p>
+        </div>
+    </section>
+     <!--##### Breadcumb Area End ##### -->
+
+     <div class="blog-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <audio preload="auto" tabindex="0" controls="controls" type="audio/mpeg">
+                        <source id="audio" type="audio/mp3" src="http://localhost:8000/static/plist/audio/WINE.mp3">
+                        Sorry, your browser doesn't support HTML5 audio.
+                    </audio>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div style="margin-left:30%;height:100%;">
+                        <div>
+                            <ul id="playlist" style="float:left;">
+                                {% for song in song_list %}
+                                    <li><a href="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">{{ song.song_title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <ul id="playlist_detail" style="float:left;">
+                                {% for song in song_list %}
+                                    <li><a href="{% url 'song_detail' pk=song.pk %}">더 보기</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block jquery %}
+        <!--참고 : http://jsfiddle.net/lastrose/vkMqR/-->
+        <script type="text/javascript" src={% static "plist/js/jquery/jquery-3.3.1.min.js"%}></script>
+        <script>
+            $( document ).ready(function() {
+                $.getScript('{% static "plist/js/plugins/plugins.js"%}');
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery.noConflict();
+            var audio;
+            var playlist;
+            var tracks;
+            var current;
+
+            init();
+            function init(){
+                current = 0;
+                audio = jQuery('audio');
+                playlist = jQuery('#playlist');
+                tracks = playlist.find('li a');
+                len = tracks.length;
+                audio[0].volume = .10;
+                playlist.find('a').click(function(e){
+                    e.preventDefault();
+                    link = jQuery(this);
+                    current = link.parent().index();
+                    run(link, audio[0]);
+                });
+                audio[0].addEventListener('ended',function(e){
+                    current++;
+                    if(current == len){
+                        current = 0;
+                        link = playlist.find('a')[0];
+                    }else{
+                        link = playlist.find('a')[current];
+                    }
+                    run(jQuery(link),audio[0]);
+                });
+            }
+            function run(link, player){
+                    player.src = link.attr('href');
+                    par = link.parent();
+                    par.addClass('active').siblings().removeClass('active');
+                    audio[0].load();
+                    audio[0].play();
+            }
+        </script>
+    {% endblock %}

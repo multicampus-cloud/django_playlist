@@ -1,5 +1,5 @@
 from .forms import SongForm,UserForm, LoginForm
-from .models import Song
+from .models import Song, Playlist
 from .download import download_video_and_subtitle
 from .slice import find_sec, song_slice
 from .get_artist_thumbnail import get_thumbnail
@@ -172,7 +172,22 @@ def playlist(request):
     except EmptyPage:
         song_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'plist/myPage/playlist.html', {'song_list': song_list})
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.all()
+
+    return render(request, 'plist/myPage/playlist.html', {'song_list': song_list, 'play_list': play_list})
+
+
+def play_detail(request, pk):
+    play_detail_list = get_object_or_404(Playlist, pk=pk)
+
+    song_list = []
+    song_id_list = play_detail_list.play_list.split(',')
+    for song_id in song_id_list:
+        song = get_object_or_404(Song,pk=song_id)
+        song_list.append(song)
+
+    return render(request, 'plist/myPage/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list})
 
 
 def search_title(request):

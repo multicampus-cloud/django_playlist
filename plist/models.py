@@ -57,6 +57,7 @@ class Song(models.Model):
         obj.save()
         return obj.to_dict(include_meta=True)
 
+
 class Playlist(models.Model):
     # 작성자
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)  # ForeignKey 는 class
@@ -66,3 +67,6 @@ class Playlist(models.Model):
     play_list = models.CharField(max_length=200)
     # play_detail
     play_detail = models.TextField()
+
+    def __str__(self):
+        return self.play_title
