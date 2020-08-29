@@ -2,6 +2,7 @@ from .forms import SongForm,UserForm, LoginForm
 from .models import Song
 from .download import download_video_and_subtitle
 from .slice import find_sec, song_slice
+from .get_artist_thumbnail import get_thumbnail
 from .youtube_recommend import recommend_song_list
 from .documents import SongDocument
 
@@ -15,7 +16,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 GENRE_CHOICES = (
-    ('', 'Select Genre'),
     ('0', '가요'),  # First one is the value of select option and second is the displayed value in option
     ('1', 'R&B'),
     ('2', 'POP'),
@@ -26,7 +26,6 @@ GENRE_CHOICES = (
     ('7', '기타'),
 )
 TAG_CHOICES = (
-    ('', 'Select Tag'),
     ("0", "탈주"),
     ("1", "비오는날"),
     ("2", "노동요"),
@@ -82,10 +81,22 @@ def song_new(request):
             # print(form.cleaned_data)
 
             # 파일뽑아내는 작업
-            # download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
+            download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
 
             # 파일 자르는 작업
-            # song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
+            song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
+
+            # 썸네일 만드는 작업
+            print(form.cleaned_data['song_artist'])
+            verify = get_thumbnail(form.cleaned_data['song_artist'])
+            print(verify)
+            if verify:
+                thumbnail = form.cleaned_data['song_artist']
+            else:
+                thumbnail = 'default'
+
+            #post = Song.objects.get(pk=3)
+            #post.delete()
 
             # db에 넣기
             song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
@@ -95,8 +106,10 @@ def song_new(request):
                                        song_start=form.cleaned_data['song_start'], \
                                        song_end=form.cleaned_data['song_end'], \
                                        song_tag=form.cleaned_data['song_tag'], \
+                                       song_thumbnail=thumbnail,\
                                        song_detail=form.cleaned_data['song_detail'],\
                                        )
+
             return redirect('index')
         else:
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
