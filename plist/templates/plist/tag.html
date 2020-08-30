@@ -1,0 +1,62 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/imgbg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>Latest Albums</h2>
+        </div>
+
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Album Catagory Area Start ##### -->
+    <section class="album-catagory section-padding-100-0">
+        <div class="container">
+            {% for tag_dict in tag_list %}
+                {% for idx,song_list in tag_dict.items %}
+                    <p>{{ idx }}   <button id="{{ idx }}"">태그 관리</button></p>
+                    <div class="div{{ idx }}">
+                    {% for song in song_list %}
+                        <div class="col-12">
+                            <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                <div class="song-thumbnail">
+                                        <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="song-play-area">
+                                    <div class="song-name">
+                                            <p>{{song.song_title}}</p>
+                                        </a>
+                                    </div>
+                                    <audio preload="auto" controls="controls">
+                                        <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                    </audio>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <div style="height: 150px"></div>
+    </section>
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript">
+        window.onload = function() {
+            // 임의의 객체에 대해 이벤트 장착 가능
+            document.getElementById("1").onclick = function () {
+                $('#div1').hide();
+            }
+        }
+    </script>
+    <!--출처: https://note.espriter.net/1120 [espriter]-->
+{% endblock %}

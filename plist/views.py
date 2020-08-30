@@ -118,6 +118,7 @@ def song_new(request):
         return render(request, 'plist/song_new.html', {'form': form})
 
 
+# 특정 song detail 정보 가져오기
 def song_detail(request,pk):
     song = get_object_or_404(Song, pk=pk)
     song_tag = TAG_CHOICES[int(song.song_tag)]
@@ -155,7 +156,7 @@ def element(request):
     return render(request, 'plist/element.html')
 
 
-# mypage 안에 my playlist 가져오기(모든 노래가져오기)
+# mypage 안에 my playlist 가져오기(모든 노래가져오기) + playlist 목록 가져오기
 @login_required
 def playlist(request):
     # 페이지 별로 구분해서 리스트 출력하기
@@ -178,6 +179,7 @@ def playlist(request):
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list, 'play_list': play_list})
 
 
+# 특정 playlist 들어있는 노래목록 가져오기
 def play_detail(request, pk):
     play_detail_list = get_object_or_404(Playlist, pk=pk)
 
@@ -215,3 +217,15 @@ def search_genre(request):
     else:
         singer = ''
     return render(request, 'plist/blog.html', {'genre':genre})
+
+
+# 태그 검색
+def search_tag(request):
+    tag_list = []
+    for idx in range(len(TAG_CHOICES)):
+        tag_dict = {}
+        song_list = Song.objects.filter(song_tag=idx)
+        tag_dict[idx] = song_list
+        tag_list.append(tag_dict)
+
+    return render(request, 'plist/tag.html', {'tag_list': tag_list})
