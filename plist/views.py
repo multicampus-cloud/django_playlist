@@ -98,17 +98,20 @@ def song_new(request):
         form = SongForm(request.POST)
         if form.is_valid():
             # 파일뽑아내는 작업
-            download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
+            # download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
 
             # 파일 자르는 작업
-            song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
+            # song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
             # 썸네일 만드는 작업
-            verify = get_thumbnail(form.cleaned_data['song_artist'])
-            if verify:
-                thumbnail = form.cleaned_data['song_artist']
-            else:
-                thumbnail = 'default'
+            # verify = get_thumbnail(form.cleaned_data['song_artist'])
+            # if verify:
+            #     thumbnail = form.cleaned_data['song_artist']
+            # else:
+            #     thumbnail = 'default'
+
+            # 테스트용
+            thumbnail = form.cleaned_data['song_artist']
 
             # db에 넣기
             song = Song.objects.create(song_title=form.cleaned_data['song_title'],\
