@@ -1,4 +1,4 @@
-from .forms import SongForm,UserForm, LoginForm
+from .forms import SongForm,UserForm, LoginForm, PlaylistForm
 from .models import Song, Playlist
 from .download import download_video_and_subtitle
 from .slice import find_sec, song_slice
@@ -42,6 +42,25 @@ class UserCreateView(CreateView):
     success_url = "/"
 
 
+def list_new(request):
+    song_list = Song.objects.all()
+    if request.method == "POST":
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            
+            # db에 넣기
+            playlist = Playlist.objects.create(play_title=form.cleaned_data['play_title'],
+                                                author=request.user,
+                                        )
+            return redirect('playlist')
+        else:
+            return HttpResponse('문제가 발생했습니다. 다시 시도해주세요.')
+    
+    else:
+        form = PlaylistForm()
+        return render(request, 'plist/list_new.html', {'form':form, 'song_list':song_list})
+
+
 # 로그인 페이지
 def login(request):
     if request.method == "POST":
@@ -78,7 +97,6 @@ def song_new(request):
     if request.method == "POST":
         form = SongForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data)
 
             # 파일뽑아내는 작업
             download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
@@ -87,16 +105,11 @@ def song_new(request):
             song_slice(form.cleaned_data['song_title'],form.cleaned_data['song_start'],form.cleaned_data['song_end'])
 
             # 썸네일 만드는 작업
-            print(form.cleaned_data['song_artist'])
             verify = get_thumbnail(form.cleaned_data['song_artist'])
-            print(verify)
             if verify:
                 thumbnail = form.cleaned_data['song_artist']
             else:
                 thumbnail = 'default'
-
-            #post = Song.objects.get(pk=3)
-            #post.delete()
 
             # db에 넣기
             song = Song.objects.create(song_title=form.cleaned_data['song_title'],\

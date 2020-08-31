@@ -15,6 +15,19 @@ class LoginForm(forms.ModelForm):
         fields = ['username', 'password']
 
 
+# 플레이 리스트 폼
+class PlaylistForm(forms.ModelForm):
+    class Meta:
+        model = Playlist
+        fields = ('play_title',)
+        widgets = {
+            'play_title': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'play_title': '플레이 리스트 제목을 입력하세요.',
+        }
+
+
 class SongForm(forms.ModelForm):
     class Meta:
         model = Song
