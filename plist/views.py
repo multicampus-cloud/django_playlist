@@ -78,7 +78,7 @@ def song_new(request):
     if request.method == "POST":
         form = SongForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data)
+            print(form.cleaned_data)
 
             # 파일뽑아내는 작업
             download_video_and_subtitle(form.cleaned_data['song_url'], form.cleaned_data['song_title'])
@@ -108,6 +108,7 @@ def song_new(request):
                                        song_tag=form.cleaned_data['song_tag'], \
                                        song_thumbnail=thumbnail,\
                                        song_detail=form.cleaned_data['song_detail'],\
+                                       author=request.user,
                                        )
 
             return redirect('index')
@@ -115,6 +116,8 @@ def song_new(request):
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
     else:
         form = SongForm()
+        print("===request.user===")
+        print(request.user)
         return render(request, 'plist/song_new.html', {'form': form})
 
 
@@ -160,7 +163,7 @@ def element(request):
 @login_required
 def playlist(request):
     # 페이지 별로 구분해서 리스트 출력하기
-    song_list = Song.objects.all()
+    song_list = Song.objects.filter(author=request.user)
     # song_list 목록에서 한페이지당 2개씩 할당
     paginator = Paginator(song_list, 6)
     # page 받아오기

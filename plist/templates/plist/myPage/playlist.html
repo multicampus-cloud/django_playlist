@@ -77,7 +77,7 @@
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                             </a></h6>
                             <div id="collapseTwo" class="accordion-content collapse show">
-                                <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail }}</a></p>
+                                <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail | linebreaksbr }}</a></p>
                             </div>
                         </div>
                         {% endfor %}
