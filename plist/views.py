@@ -217,15 +217,3 @@ def search_genre(request):
     else:
         singer = ''
     return render(request, 'plist/blog.html', {'genre':genre})
-
-
-# 태그 검색
-def search_tag(request):
-    tag_list = []
-    for idx in range(len(TAG_CHOICES)):
-        tag_dict = {}
-        song_list = Song.objects.filter(song_tag=idx)
-        tag_dict[idx] = song_list
-        tag_list.append(tag_dict)
-
-    return render(request, 'plist/tag.html', {'tag_list': tag_list})
