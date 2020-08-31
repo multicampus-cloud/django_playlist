@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+{% load bootstrap4 %}
+
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+    <div class="bradcumbContent">
+        {% if user.is_active %}
+            <h3>{{user.username}} 님의</h3>
+        {% else %}
+            <h3>Unknown 님의</h3>
+        {% endif %}
+        <h2>play list</h2>
+    </div>
+</section>
+
+<section class="events-area section-padding-100" style="border:1px solid blue">
+    <div class="row">
+        <div class="col-8" style="margin-left:10px">
+            <div class="one-music-songs-area mb-70">
+                <!-- row start -->
+                <div class="row">
+
+                        {% for list in song_list %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="/static/plist/img/artist/{{ list.song_thumbnail }}.jpg" alt="">
+                                    </div>
+                                    <div class="song-play-area" style="width:100px;">
+                                        <p>{{list.song_title}} {{list.song_artist}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <button type="submit" class="btn oneMusic-btn mt-30" onclick="javascript:show();">Register</button>
+                        </form>
+                        <!--  pagination.html 추가  -->
+                        <div class="col-12">
+                            {% include 'plist/pagination.html' with page=song_list %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('#loading').hide();
+        });
+        function show() {
+          $('#loading').show();
+        }
+    </script>
+    <!--출처: https://hunit.tistory.com/309 [Ara Blog]-->
+{% endblock %}

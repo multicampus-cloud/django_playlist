@@ -42,8 +42,13 @@ class Song(models.Model):
     song_thumbnail = models.ImageField(blank=True, null=True)
     # song_detail
     song_detail = models.TextField(blank=True, null=True)
+<<<<<<< HEAD
     # song author (추가한 사용자)
     author = models.ForeignKey('auth.User', on_delete=models.SET_DEFAULT, default=1)  # ForeignKey 는 class
+=======
+    author = models.ForeignKey('auth.User', on_delete=models.SET_DEFAULT,default=5)  # ForeignKey 는 class
+
+>>>>>>> sungwoo
 
     def __str__(self):
         return self.song_title + '('+self.song_artist+')'
