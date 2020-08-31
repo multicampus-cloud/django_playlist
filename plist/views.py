@@ -211,9 +211,46 @@ def search_artist(request):
 
 
 def search_genre(request):
-    g = request.GET.get('g')
-    if g:
-        genre = SongDocument.search().query('match',song_genre=g)
-    else:
-        singer = ''
-    return render(request, 'plist/blog.html', {'genre':genre})
+
+    # return render(request,'plist/genre.html')
+    kpops = Song.objects.filter(song_genre='0')
+    r_bs = Song.objects.filter(song_genre='1')
+    pops = Song.objects.filter(song_genre='2')
+    jazzs = Song.objects.filter(song_genre='3')
+    indies = Song.objects.filter(song_genre='4')
+    dances = Song.objects.filter(song_genre='5')
+    hiphops = Song.objects.filter(song_genre='6')
+    elses = Song.objects.filter(song_genre='7')
+    # a = request.POST.get('pop')
+    # if a:
+    return render(request, 'plist/genre.html',
+                  {'kpops': kpops,
+                   'pops': pops,
+                   'r_bs': r_bs,
+                   'jazzs': jazzs,
+                   'indies':indies,
+                   'dances': dances,
+                   'hiphops':hiphops,
+                   'elses': elses,
+                   })
+
+
+def search_tag(request):
+    # return render(request,'plist/genre.html')
+    tag_0 = Song.objects.filter(song_tag='0')
+    tag_1 = Song.objects.filter(song_tag='1')
+    tag_2 = Song.objects.filter(song_tag='2')
+    tag_3 = Song.objects.filter(song_tag='3')
+    tag_4 = Song.objects.filter(song_tag='4')
+    tag_5 = Song.objects.filter(song_tag='5')
+    tag_6 = Song.objects.filter(song_tag='6')
+
+    return render(request, 'plist/tag.html',
+                  {'tag_0': tag_0,
+                   'tag_1': tag_1,
+                   'tag_2': tag_2,
+                   'tag_3': tag_3,
+                   'tag_4': tag_4,
+                   'tag_5': tag_5,
+                   'tag_6': tag_6,
+                   })
