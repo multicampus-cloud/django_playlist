@@ -29,7 +29,7 @@
                                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
                                         <div class="song-thumbnail">
                                             <a href="{% url 'song_detail' pk=song.pk%}">
-                                                <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                                <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
                                             </a>
                                         </div>
                                         <div class="song-play-area">
@@ -45,8 +45,10 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                        {% else %}
-                            로그인 해주세요
+                            <!--  pagination.html 추가  -->
+                            <div class="col-12">
+                                {% include 'plist/pagination.html' with page=song_list %}
+                            </div>
                         {% endif %}
                     </div> <!-- row end -->
                 </div>
@@ -68,30 +70,17 @@
                                 <p>take your lie whenever let me go</p>
                             </div>
                         </div>
-                        <!-- single accordian area -->
-                        <div class="panel single-accordion">
-                            <h6>
-                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Playlist 2
-                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                        </a>
-                            </h6>
-                            <div id="collapseTwo" class="accordion-content collapse">
-                                <p>어떤 날은 그랬지 구름위를 걸었지</p>
+                        {% for play in play_list %}
+                            <div class="panel single-accordion">
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">{{ play.play_title }}
+                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            </a></h6>
+                            <div id="collapseTwo" class="accordion-content collapse show">
+                                <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail }}</a></p>
                             </div>
                         </div>
-                        <!-- single accordian area -->
-                        <div class="panel single-accordion">
-                            <h6>
-                                <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">Playlist 3
-                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                    </a>
-                            </h6>
-                            <div id="collapseThree" class="accordion-content collapse">
-                                <p>멀리 멀리 아주멀리 날아가버린</p>
-                            </div>
-                        </div>
+                        {% endfor %}
                        <div class="single-event-area mb-30">
                            <div class="event-text">
                                <h4>New Playlist</h4>
