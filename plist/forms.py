@@ -21,7 +21,6 @@ class SongForm(forms.ModelForm):
         fields = ('song_title','song_artist','song_url','song_genre'\
                   ,'song_tag','song_start','song_end','song_detail',)
         GENRE_CHOICES = (
-            ('', 'Select Genre'),
             ('0', '가요'),  # First one is the value of select option and second is the displayed value in option
             ('1', 'R&B'),
             ('2', 'POP'),
@@ -32,8 +31,7 @@ class SongForm(forms.ModelForm):
             ('7', '기타'),
         )
         TAG_CHOICES = (
-            ('', 'Select Tag'),
-            ("0", "탈주"),
+            ('0', "탈주"),
             ("1", "비오는날"),
             ("2", "노동요"),
             ("3", "심신안정,ASMR"),
@@ -43,12 +41,12 @@ class SongForm(forms.ModelForm):
         )
         widgets = {
             'song_genre': forms.Select(choices=GENRE_CHOICES, attrs={'class': 'form-control'}),
-            'song_title': forms.TextInput(attrs={'class': 'form-control','placeholder':'영어이름만 저장 가능'}),
+            'song_title': forms.TextInput(attrs={'class': 'form-control'}),
             'song_artist': forms.TextInput(attrs={'class': 'form-control'}),
             'song_url': forms.TextInput(attrs={'class': 'form-control'}),
             'song_tag': forms.Select(choices=TAG_CHOICES, attrs={'class': 'form-control'}),
-            'song_start': forms.TextInput(attrs={'class': 'form-control'}),
-            'song_end': forms.TextInput(attrs={'class': 'form-control'}),
+            'song_start': forms.TextInput(attrs={'class': 'form-control','placeholder':'시:분:초 형태로 입력\t\tex) 0분 0초   0:0'}),
+            'song_end': forms.TextInput(attrs={'class': 'form-control','placeholder':'시:분:초 형태로 입력\t\tex) 1시간 5초   1:0:5'}),
             'song_detail': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
