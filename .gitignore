@@ -1,6 +1,11 @@
 ### Pycharm ###
 .idea/
 ./venv
+mydatabase
+plist/static/plist/audio/Home.mp3
+plist/static/plist/audio/Losing You.mp3
+plist/static/plist/audio/Why.mp3
+plist/static/plist/audio/purpose.mp3
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode
