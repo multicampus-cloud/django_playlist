@@ -1,0 +1,242 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb2.jpg' %});">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>Genre</h2>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Elements Area Start ##### -->
+    <p class="elements-area mt-30 section-padding-10">
+        <div class="container">
+            <div class="row">
+
+                <!-- ========== Buttons ========== -->
+                <div class="col-12" >
+
+                    <!-- Buttons -->
+                    <div class="oneMusic-buttons-area mb-100">
+                        <button0 id="tag_0" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button0>
+                        <button1 id="tag_1" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button1>
+                        <button2 id="tag_2" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button2>
+                        <button3 id="tag_3"     class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button3>
+                        <button4 id="tag_4" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button4>
+                        <button5 id="tag_5" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button5>
+                        <button6 id="tag_6" class="btn oneMusic-btn m-2">태그1 <i class="fa fa-angle-double-right"></i></button6>
+                        <button7 class="btn oneMusic-btn m-2">all <i class="fa fa-angle-double-right"></i></button7>
+                    </div>
+
+                    <p0>
+                        {% for song in tag_0 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p0>
+                    <p1>
+                        {% for song in tag_1 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p1>
+                    <p2>
+                        {% for song in tag_2 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p2>
+                    <p3>
+                        {% for song in tag_3 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p3>
+                    <p4>
+                        {% for song in tag_4 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p4>
+                    <p5>
+                        {% for song in tag_5 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p5>
+                    <p6>
+                        {% for song in tag_6 %}
+                            <div class="col-12">
+                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                    <div class="song-thumbnail">
+                                            <img src="{% static 'plist/img/bg-img/s1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="song-play-area">
+                                        <div class="song-name">
+                                                <p>{{song.song_title}}</p>
+                                            </a>
+                                        </div>
+                                        <audio preload="auto" controls="controls">
+                                            <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </p6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <section>
+        <div style="height: 150px"></div>
+    </section>
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+      $("button0").click(function(){
+        $("p0").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button1").click(function(){
+        $("p1").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button2").click(function(){
+        $("p2").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button3").click(function(){
+        $("p3").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button4").click(function(){
+        $("p4").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button5").click(function(){
+        $("p5").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button6").click(function(){
+        $("p6").toggle();
+      });
+    });
+        $(document).ready(function(){
+      $("button7").click(function(){
+        $("p0").toggle();
+        $("p1").toggle();
+        $("p2").toggle();
+        $("p3").toggle();
+        $("p4").toggle();
+        $("p5").toggle();
+        $("p6").toggle();
+      });
+    });
+    </script>
+
+    <!--출처: https://hunit.tistory.com/309 [Ara Blog]-->
+{% endblock %}

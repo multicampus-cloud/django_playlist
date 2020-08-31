@@ -70,27 +70,8 @@
                                     </li>
                                     <li><a href="{% url 'blog' %}">Search</a>
                                             <ul class="dropdown">
-                                                    <li><a href="#">장르</a>
-                                                         <ul class="dropdown">
-                                                            <li><a href="#">K-pop</a></li>
-                                                            <li><a href="#">R&B</a></li>
-                                                            <li><a href="#">POP</a></li>
-                                                            <li><a href="#">JAZZ</a></li>
-                                                            <li><a href="#">Indi</a></li>
-                                                            <li><a href="#">댄스</a></li>
-                                                            <li><a href="#">Rap/HiphoP</a></li>
-                                                            <li><a href="#">else</a></li>
-                                                     </li>
-                                                        </ul>
-                                                    <li><a href="#">태그</a>
-                                                        <ul class="dropdown">
-                                                            <li><a href="#">비오는 날</a></li>
-                                                            <li><a href="#">한강에서...</a></li>
-                                                            <li><a href="#">공부할 때</a></li>
-                                                            <li><a href="#">노동요</a></li>
-                                                            <li><a href="#">ASMR</a></li>
-                                                        </ul>
-                                                    </li>
+                                                    <li><a href="{% url 'genre' %}">장르</a></li>
+                                                    <li><a href="{% url 'tag' %}">태그</a></li>
                                                 </ul>
                                     </li>
                                     <li><a href="{% url 'event' %}">Events</a></li>
