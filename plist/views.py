@@ -116,8 +116,6 @@ def song_new(request):
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
     else:
         form = SongForm()
-        print("===request.user===")
-        print(request.user)
         return render(request, 'plist/song_new.html', {'form': form})
 
 
@@ -165,7 +163,7 @@ def playlist(request):
     # 페이지 별로 구분해서 리스트 출력하기
     song_list = Song.objects.filter(author=request.user)
     # song_list 목록에서 한페이지당 2개씩 할당
-    paginator = Paginator(song_list, 6)
+    paginator = Paginator(song_list, 5)
     # page 받아오기
     page = request.GET.get('page')
 
@@ -177,7 +175,7 @@ def playlist(request):
         song_list = paginator.page(paginator.num_pages)
 
     # 플레이리스트 가져오기
-    play_list = Playlist.objects.all()
+    play_list = Playlist.objects.filter(author=request.user)
 
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list, 'play_list': play_list})
 
