@@ -2,6 +2,7 @@
 {% block main %}
 {% load static %}
 
+
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/imgbg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
@@ -15,9 +16,11 @@
     <!-- ##### Album Catagory Area Start ##### -->
     <section class="album-catagory section-padding-100-0">
         <div class="container">
-             <form method="get">Search for Artist
-                <input id="q" name="q" type="text" placeholder="input artist..."/>
-            </form>
+            <div class="formtag">
+                <form action="" method="get"><font size="4.5em">Search for Title</font>
+                    <input id="q" name="q" type="text" placeholder="input Title..."/>
+                </form>
+            </div>
             {% for song in songs %}
                 {{ song.song_title }}
                 {{ song.song_artist }}

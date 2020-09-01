@@ -15,9 +15,11 @@
     <!-- ##### Album Catagory Area Start ##### -->
     <section class="album-catagory section-padding-100-0">
         <div class="container">
-             <form method="get">Search for Artist
-                <input id="a" name="a" type="text" placeholder="input artist..."/>
-            </form>
+            <div class="formtag">
+                <form method="get"><font size="4.5em">Search for Artist</font>
+                    <input id="a" name="a" type="text" placeholder="input Artist..."/>
+                </form>
+            </div>
             {% for song in singer %}
                 {{ song.song_title }}
                 {{ song.song_artist }}
