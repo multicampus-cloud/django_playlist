@@ -344,5 +344,5 @@ def rename_playlist(request,pk):
             return HttpResponse('문제가 발생했습니다. 다시 시도해주세요.')
 
     else:
-        form = PlaylistForm()
+        form = PlaylistForm(instance=re_playlist)
         return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
