@@ -62,21 +62,21 @@
                     <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
                         <!-- single accordian area -->
                         <div class="panel single-accordion">
-                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Playlist 1
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Playlist 목록
                                     <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                     </a></h6>
                             <div id="collapseOne" class="accordion-content collapse show">
-                                <p>take your lie whenever let me go</p>
+                                <p>이 부분을 선택하면 플레이리스트 재생화면으로 이동합니다.</p>
                             </div>
                         </div>
                         {% for play in play_list %}
                             <div class="panel single-accordion">
-                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">{{ play.play_title }}
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapse{{ play.id }}" data-parent="#accordion" data-toggle="collapse" href="#collapse{{ play.id }}">{{ play.play_title }}
                                     <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                             </a></h6>
-                            <div id="collapseTwo" class="accordion-content collapse show">
+                            <div id="collapse{{ play.id }}" class="accordion-content collapse">
                                 <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail | linebreaksbr }}</a></p>
                             </div>
                         </div>
