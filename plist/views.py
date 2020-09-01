@@ -235,7 +235,11 @@ def search_title(request):
         songs = SongDocument.search().query('match',song_title=q)
     else:
         songs = ''
-    return render(request, 'plist/title.html',{'songs':songs})
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
+    return render(request, 'plist/title.html',{'songs':songs,'play_list':play_list})
 
 
 def search_artist(request):
@@ -244,7 +248,11 @@ def search_artist(request):
         singer = SongDocument.search().query('match',song_artist=a)
     else:
         singer = ''
-    return render(request, 'plist/artist.html', {'singer':singer})
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
+    return render(request, 'plist/artist.html', {'singer':singer,'play_list':play_list})
 
 
 def search_genre(request):
@@ -260,6 +268,10 @@ def search_genre(request):
     elses = Song.objects.filter(song_genre='7')
     # a = request.POST.get('pop')
     # if a:
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
     return render(request, 'plist/genre.html',
                   {'kpops': kpops,
                    'pops': pops,
@@ -269,6 +281,7 @@ def search_genre(request):
                    'dances': dances,
                    'hiphops':hiphops,
                    'elses': elses,
+                   'play_list': play_list,
                    })
 
 
@@ -282,6 +295,9 @@ def search_tag(request):
     tag_5 = Song.objects.filter(song_tag='5')
     tag_6 = Song.objects.filter(song_tag='6')
 
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
     return render(request, 'plist/tag.html',
                   {'tag_0': tag_0,
                    'tag_1': tag_1,
@@ -290,6 +306,7 @@ def search_tag(request):
                    'tag_4': tag_4,
                    'tag_5': tag_5,
                    'tag_6': tag_6,
+                   'play_list':play_list,
                    })
 
 
@@ -319,7 +336,6 @@ def delete_playlist(request,pk):
 
 
 def delete_song(request, play_pk, song_pk):
-    request.GET.get(Playlist)
     select_playlist = get_object_or_404(Playlist, pk=play_pk)
     del_pk = song_pk
     song_list = select_playlist.play_list.split(',')
@@ -346,3 +362,30 @@ def rename_playlist(request,pk):
     else:
         form = PlaylistForm(instance=re_playlist)
         return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
+
+
+def add_song(request, play_pk, song_pk,path_pk):
+    new_playlist = get_object_or_404(Playlist, pk=play_pk)
+    song_list = new_playlist.play_list.split(',')
+    song_list.append(str(song_pk))
+    new_list = ",".join(song_list)
+    new_playlist.play_list = new_list
+    new_playlist.save()
+
+    # 1: playlist 로 보내기
+    if path_pk == 1:
+        return redirect('playlist')
+    # 2: artist 로 보내기
+    elif path_pk == 2:
+        return redirect('artist')
+    # 3: title 로 보내기
+    elif path_pk == 3:
+        return redirect('title')
+    # 4: genre 로 보내기
+    elif path_pk == 4:
+        return redirect('genre')
+    # 5: tag 로 보내기
+    elif path_pk == 5:
+        return redirect('tag')
+
+
