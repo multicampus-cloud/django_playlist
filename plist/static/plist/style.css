@@ -1672,6 +1672,24 @@ img {
   .single-web-icon:hover {
     box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.15); }
 
+input[type=text],select {
+        width: 100%;
+        padding:12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+input[type=text]:focus {
+    background-color: lightblue ;
+    border: 3px solid #555;
+}
+div.formtag {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 40px;
+}
 /* ====== The End ====== */
 
 /*# sourceMappingURL=style.css.map */

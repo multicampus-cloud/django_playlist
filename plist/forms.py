@@ -24,7 +24,7 @@ class PlaylistForm(forms.ModelForm):
             'play_title': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
-            'play_title': '플레이 리스트 제목을 입력하세요.',
+            'play_title': '',
         }
 
 

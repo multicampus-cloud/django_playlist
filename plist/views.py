@@ -77,6 +77,18 @@ def list_copy(request,pk):
     return redirect('playlist')
 
 
+def signup(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            # login(request, new_user)
+            return redirect('index')
+    else:
+        form = UserForm()
+        return render(request, 'registration/signup.html', {'form': form})
+
+
 # 로그인 페이지
 def login(request):
     if request.method == "POST":
@@ -260,7 +272,11 @@ def search_title(request):
         songs = SongDocument.search().query('match',song_title=q)
     else:
         songs = ''
-    return render(request, 'plist/title.html',{'songs':songs})
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
+    return render(request, 'plist/title.html',{'songs':songs,'play_list':play_list})
 
 
 def search_artist(request):
@@ -269,7 +285,11 @@ def search_artist(request):
         singer = SongDocument.search().query('match',song_artist=a)
     else:
         singer = ''
-    return render(request, 'plist/artist.html', {'singer':singer})
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
+    return render(request, 'plist/artist.html', {'singer':singer,'play_list':play_list})
 
 
 def search_genre(request):
@@ -285,6 +305,10 @@ def search_genre(request):
     elses = Song.objects.filter(song_genre='7')
     # a = request.POST.get('pop')
     # if a:
+
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
     return render(request, 'plist/genre.html',
                   {'kpops': kpops,
                    'pops': pops,
@@ -294,6 +318,7 @@ def search_genre(request):
                    'dances': dances,
                    'hiphops':hiphops,
                    'elses': elses,
+                   'play_list': play_list,
                    })
 
 
@@ -307,6 +332,9 @@ def search_tag(request):
     tag_5 = Song.objects.filter(song_tag='5')
     tag_6 = Song.objects.filter(song_tag='6')
 
+    # 플레이리스트 가져오기
+    play_list = Playlist.objects.filter(author=request.user)
+
     return render(request, 'plist/tag.html',
                   {'tag_0': tag_0,
                    'tag_1': tag_1,
@@ -315,4 +343,86 @@ def search_tag(request):
                    'tag_4': tag_4,
                    'tag_5': tag_5,
                    'tag_6': tag_6,
+                   'play_list':play_list,
                    })
+
+
+def my_info(request):
+    my_playlists = Playlist.objects.filter(author=request.user)
+    new_list = []
+    for detail_list in my_playlists:
+        list_dict = {}
+        song_list = []
+        if len(detail_list.play_list) == 0:
+            continue
+        if detail_list.play_list:
+            song_id_list = detail_list.play_list.split(',')
+        for song_id in song_id_list:
+            song = get_object_or_404(Song, pk=song_id)
+            song_list.append(song)
+        list_dict['my_playlist'] = detail_list
+        list_dict['song_list'] = song_list
+        new_list.append(list_dict)
+    print(new_list)
+    return render(request, 'plist/myPage/my_info.html', {'new_list': new_list})
+
+def delete_playlist(request,pk):
+    del_playlist = get_object_or_404(Playlist, pk=pk)
+    del_playlist.delete()
+    return redirect('my_info')
+
+
+def delete_song(request, play_pk, song_pk):
+    select_playlist = get_object_or_404(Playlist, pk=play_pk)
+    del_pk = song_pk
+    song_list = select_playlist.play_list.split(',')
+    for i in song_list:
+        if str(del_pk) == i:
+            song_list.remove(str(del_pk))
+    new_list = ",".join(song_list)
+    select_playlist.play_list = new_list
+    select_playlist.save()
+    return redirect('my_info')
+
+
+def rename_playlist(request,pk):
+    re_playlist = get_object_or_404(Playlist, pk=pk)
+    if request.method == "POST":
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            re_playlist.play_title = form.cleaned_data['play_title']
+            re_playlist.save()
+            return redirect('my_info')
+        else:
+            return HttpResponse('문제가 발생했습니다. 다시 시도해주세요.')
+
+    else:
+        form = PlaylistForm(instance=re_playlist)
+        return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
+
+
+def add_song(request, play_pk, song_pk,path_pk):
+    new_playlist = get_object_or_404(Playlist, pk=play_pk)
+    song_list = new_playlist.play_list.split(',')
+    song_list.append(str(song_pk))
+    new_list = ",".join(song_list)
+    new_playlist.play_list = new_list
+    new_playlist.save()
+
+    # 1: playlist 로 보내기
+    if path_pk == 1:
+        return redirect('playlist')
+    # 2: artist 로 보내기
+    elif path_pk == 2:
+        return redirect('artist')
+    # 3: title 로 보내기
+    elif path_pk == 3:
+        return redirect('title')
+    # 4: genre 로 보내기
+    elif path_pk == 4:
+        return redirect('genre')
+    # 5: tag 로 보내기
+    elif path_pk == 5:
+        return redirect('tag')
+
+

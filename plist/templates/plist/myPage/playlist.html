@@ -19,6 +19,7 @@
     <section class="events-area section-padding-100">
         <div class="row">
             <!-- ##### Song Area Start ##### -->
+
             <div class="col-8" style="margin-left:10px">
                 <div class="one-music-songs-area mb-70">
                     <!-- row start -->
@@ -33,14 +34,32 @@
                                             </a>
                                         </div>
                                         <div class="song-play-area">
-                                            <div class="song-name">
-                                                <a href="{% url 'song_detail' pk=song.pk%}">
-                                                    <p>{{song.song_title}}</p>
-                                                </a>
+                                            <div class="col-10" style="float:left;">
+                                                <div class="song-name">
+                                                    <a href="{% url 'song_detail' pk=song.pk%}">
+                                                        <p style="font-size:20px;float:left;">{{song.song_title}} <p style="font-size:15px;float:left;padding-top:7px;">&nbsp;&nbsp;({{ song.song_artist }})</p></p>
+                                                    </a>
+                                                </div>
+                                                <audio preload="auto" controls="controls">
+                                                    <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                                </audio>
                                             </div>
-                                            <audio preload="auto" controls="controls">
-                                                <source src="/static/plist/audio/{{song.song_title}}.mp3">
-                                            </audio>
+
+                                            <div class="col-2" style="float:left;">
+                                                <div class="classy-nav-container breakpoint-off" style="background-color: #262626;">
+                                                    <div class="classynav" id="oneMusicNav">
+                                                        <ul>
+                                                            <li><a href="#" style="font-size:20px;color:white"><i class="icon-inbox"></i>&nbsp;추가</a>
+                                                                <ul class="dropdown">
+                                                                    {% for play in play_list %}
+                                                                    <li><a href="{% url 'add_song' play_pk=play.pk song_pk=song.pk path_pk=1 %}">{{ play.play_title}}</a></li>
+                                                                    {% endfor %}
+                                                                 </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -54,6 +73,7 @@
                 </div>
             </div>
             <!-- ##### Song Area end ##### -->
+
 
             <!-- ##### Playlist Start ##### -->
             <div class="col-3" style="min-width:200px;">
