@@ -404,10 +404,12 @@ def rename_playlist(request,pk):
 def add_song(request, play_pk, song_pk,path_pk):
     new_playlist = get_object_or_404(Playlist, pk=play_pk)
     song_list = new_playlist.play_list.split(',')
-    song_list.append(str(song_pk))
-    new_list = ",".join(song_list)
-    new_playlist.play_list = new_list
-    new_playlist.save()
+
+    if str(song_pk) not in song_list:
+        song_list.append(str(song_pk))
+        new_list = ",".join(song_list)
+        new_playlist.play_list = new_list
+        new_playlist.save()
 
     # 1: playlist 로 보내기
     if path_pk == 1:
