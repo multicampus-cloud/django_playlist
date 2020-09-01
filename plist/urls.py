@@ -24,4 +24,5 @@ urlpatterns = [
     path('mypage/playlist/copy/<int:pk>/', views.list_copy, name='list_copy'),
     path('myPage/myInfo/delete/<int:pk>', views.delete_playlist, name='delete_playlist'),
     path('myPage/myInfo/delete/<int:play_pk>/<int:song_pk>', views.delete_song, name='delete_song'),
+    path('myPage/myInfo/rename/<int:pk>',views.rename_playlist,name='rename_playlist'),
 ]

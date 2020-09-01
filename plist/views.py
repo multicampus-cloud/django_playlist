@@ -330,3 +330,19 @@ def delete_song(request, play_pk, song_pk):
     select_playlist.play_list = new_list
     select_playlist.save()
     return redirect('my_info')
+
+
+def rename_playlist(request,pk):
+    re_playlist = get_object_or_404(Playlist, pk=pk)
+    if request.method == "POST":
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            re_playlist.play_title = form.cleaned_data['play_title']
+            re_playlist.save()
+            return redirect('my_info')
+        else:
+            return HttpResponse('문제가 발생했습니다. 다시 시도해주세요.')
+
+    else:
+        form = PlaylistForm()
+        return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
