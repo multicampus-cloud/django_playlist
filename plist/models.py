@@ -42,6 +42,10 @@ class Song(models.Model):
     song_thumbnail = models.ImageField(blank=True, null=True)
     # song_detail
     song_detail = models.TextField(blank=True, null=True)
+<<<<<<< HEAD
+=======
+    # song author (추가한 사용자)
+>>>>>>> fdfcd9358ef382d12702ce56156134f403a3a67e
     author = models.ForeignKey('auth.User', on_delete=models.SET_DEFAULT,default=5)  # ForeignKey 는 class
 
 

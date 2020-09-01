@@ -14,11 +14,11 @@ urlpatterns = [
     path('tag/', views.search_tag, name='tag'),
     path('event/', views.event, name='event'),
     path('blog/', views.blog, name='blog'),
-    path('contact/', views.contact, name='contact'),
     path('element/', views.element, name='element'),
     path('song/new/', views.song_new, name='song_new'),
     path('song/<int:pk>/', views.song_detail, name='song_detail'),
     path('mypage/playlist/', views.playlist, name='playlist'),
     path('mypage/playlist/<int:pk>/', views.play_detail, name='play_detail'),
     path('mypage/playlist/new/', views.list_new, name='list_new'),
+    path('mypage/playlist/copy/<int:pk>/', views.list_copy, name='list_copy'),
 ]

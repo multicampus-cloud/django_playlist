@@ -61,6 +61,20 @@ def list_new(request):
         return render(request, 'plist/list_new.html', {'form':form, 'song_list':song_list})
 
 
+# 다른 사람 플레이 리스트 -> 내 플레이리스트에 추가
+def list_copy(request,pk):
+    # 다른 사람 플레이리스트 가져오기
+    playlist = get_object_or_404(Playlist,pk=pk)
+    # 로그인 사용자 계정으로 플레이리스트 db에 추가
+    playlist = Playlist.objects.create(play_title=playlist.play_title,
+                            author=request.user,
+                            play_list=playlist.play_list,
+                            play_detail=str(playlist.author)+'의 플레이리스트 copy',
+                            )
+
+    return redirect('playlist')
+
+
 # 로그인 페이지
 def login(request):
     if request.method == "POST":
@@ -159,10 +173,6 @@ def event(request):
 
 def blog(request):
     return render(request, 'plist/blog.html')
-
-
-def contact(request):
-    return render(request, 'plist/contact.html')
 
 
 def element(request):
