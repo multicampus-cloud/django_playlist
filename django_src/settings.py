@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': '172.30.1.25:9200'
+        'hosts': 'localhost:9200'
     },
 }
 
@@ -145,7 +145,14 @@ DATABASES = {
     #     'HOST': '192.168.0.12',  # 데이테베이스 주소(IP)
     #     'PORT': '27017',  # 데이터베이스 포트(보통은 27017)
     # }
+
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 
 
 # Password validation

@@ -1,0 +1,124 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+    <style>
+        #testTable { width:500px; margin:auto; border-collapse: collapse; }
+        #testTable th,
+        #testTable td {padding: 5px 12px; text-align: center;border:1px solid #ccc;}
+        #testTable th {background: #eee;}
+        #playlist .active a{color:#5DB0E6;text-decoration:none;}
+        #playlist li a,#playlist_detail li a{color:darkslategray;padding:5px;display:block;}
+        #playlist li a:hover{text-decoration:none;}
+    </style>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Edit Your Own Playlist</p>
+            <h2></h2>
+        </div>
+    </section>
+     <!--##### Breadcumb Area End ##### -->
+     {% for list_dict in new_list %}
+        <table id="testTable">
+            <colgroup>
+                <col style="width: 80%">
+                <col style="width: 20%">
+            </colgroup>
+        <thead>
+            <tr>
+                <th>Playlist name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+                <tr>
+                    <td>{{ list_dict.my_playlist}}</td>
+                    <td>
+                        <a href="{% url 'delete_playlist' pk=list_dict.my_playlist.pk %}">DELETE</a>
+                    </td>
+                <table id="testTable">
+            <colgroup>
+                <col style="width: 50%">
+                <col style="width: 30%">
+                <col style="width: 20%">
+            </colgroup>
+        <thead>
+            <tr>
+                <th>Song Title</th>
+                <th>Song Artist</th>
+                <th> </th>
+            </tr>
+        </thead>
+            {% for song in list_dict.song_list %}
+                <tr>
+                    <td>{{ song.song_title }}</td>
+                    <td>{{ song.song_artist }}</td>
+                    <td>
+                        <a href="{% url 'delete_song' play_pk=list_dict.my_playlist.pk song_pk=song.pk %}">DELETE</a>
+                    </td>
+                </tr>
+            {% endfor %}
+                </tr>
+        </table>
+             <section>
+                <div style="height: 70px"></div>
+             </section>
+
+    {% endfor %}
+
+     <section>
+        <div style="height: 500px"></div>
+     </section>
+
+    {% endblock %}
+
+    {% block jquery %}
+        <!--참고 : http://jsfiddle.net/lastrose/vkMqR/-->
+        <script type="text/javascript" src={% static "plist/js/jquery/jquery-3.3.1.min.js"%}></script>
+        <script>
+            $( document ).ready(function() {
+                $.getScript('{% static "plist/js/plugins/plugins.js"%}');
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery.noConflict();
+            var audio;
+            var playlist;
+            var tracks;
+            var current;
+
+            init();
+            function init(){
+                current = 0;
+                audio = jQuery('audio');
+                playlist = jQuery('#playlist');
+                tracks = playlist.find('li a');
+                len = tracks.length;
+                audio[0].volume = .10;
+                playlist.find('a').click(function(e){
+                    e.preventDefault();
+                    link = jQuery(this);
+                    current = link.parent().index();
+                    run(link, audio[0]);
+                });
+                audio[0].addEventListener('ended',function(e){
+                    current++;
+                    if(current == len){
+                        current = 0;
+                        link = playlist.find('a')[0];
+                    }else{
+                        link = playlist.find('a')[current];
+                    }
+                    run(jQuery(link),audio[0]);
+                });
+            }
+            function run(link, player){
+                    player.src = link.attr('href');
+                    par = link.parent();
+                    par.addClass('active').siblings().removeClass('active');
+                    audio[0].load();
+                    audio[0].play();
+            }
+        </script>
+    {% endblock %}

@@ -46,8 +46,10 @@ class Song(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.SET_DEFAULT,default=5)  # ForeignKey 는 class
 
 
+
     def __str__(self):
         return self.song_title + '('+self.song_artist+')'
+
 
     def indexing(self):
         obj = SongDocument(

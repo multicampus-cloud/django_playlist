@@ -29,7 +29,7 @@
                         <buttondan id="dance" class="btn oneMusic-btn m-2">DANCE <i class="fa fa-angle-double-right"></i></buttondan>
                         <buttonhip id="hiphop" class="btn oneMusic-btn m-2">HIPHOP <i class="fa fa-angle-double-right"></i></buttonhip>
                         <buttonelse id="else" class="btn oneMusic-btn m-2">ELSE <i class="fa fa-angle-double-right"></i></buttonelse>
-                        <buttonall id="else" class="btn oneMusic-btn m-2">ALL <i class="fa fa-angle-double-right"></i></buttonall>
+                        <buttonall id="all" class="btn oneMusic-btn btn-2 m-2">ALL </buttonall>
                     </div>
 
                     <p0>
@@ -224,7 +224,9 @@
     });
         $(document).ready(function(){
       $("buttonpop").click(function(){
+        $("buttonpop").css("color","#d49a9a");
         $("p2").toggle();
+        $(this).css("color","#c2c0c0");
       });
     });
         $(document).ready(function(){

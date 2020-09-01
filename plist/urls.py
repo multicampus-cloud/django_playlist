@@ -7,6 +7,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('myPage/myInfo/',views.my_info, name='my_info'),
     path('title/', views.search_title, name='title'),
     path('artist/', views.search_artist, name='artist'),
     path('album/', views.album, name='album'),
@@ -21,4 +22,6 @@ urlpatterns = [
     path('mypage/playlist/<int:pk>/', views.play_detail, name='play_detail'),
     path('mypage/playlist/new/', views.list_new, name='list_new'),
     path('mypage/playlist/copy/<int:pk>/', views.list_copy, name='list_copy'),
+    path('myPage/myInfo/delete/<int:pk>', views.delete_playlist, name='delete_playlist'),
+    path('myPage/myInfo/delete/<int:play_pk>/<int:song_pk>', views.delete_song, name='delete_song'),
 ]

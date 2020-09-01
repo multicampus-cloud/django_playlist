@@ -77,6 +77,18 @@ def list_copy(request,pk):
     return redirect('playlist')
 
 
+def signup(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            # login(request, new_user)
+            return redirect('index')
+    else:
+        form = UserForm()
+        return render(request, 'registration/signup.html', {'form': form})
+
+
 # 로그인 페이지
 def login(request):
     if request.method == "POST":
@@ -279,3 +291,42 @@ def search_tag(request):
                    'tag_5': tag_5,
                    'tag_6': tag_6,
                    })
+
+
+def my_info(request):
+    my_playlists = Playlist.objects.filter(author=request.user)
+    new_list = []
+    for detail_list in my_playlists:
+        list_dict = {}
+        song_list = []
+        if len(detail_list.play_list) == 0:
+            continue
+        if detail_list.play_list:
+            song_id_list = detail_list.play_list.split(',')
+        for song_id in song_id_list:
+            song = get_object_or_404(Song, pk=song_id)
+            song_list.append(song)
+        list_dict['my_playlist'] = detail_list
+        list_dict['song_list'] = song_list
+        new_list.append(list_dict)
+    print(new_list)
+    return render(request, 'plist/myPage/my_info.html', {'new_list': new_list})
+
+def delete_playlist(request,pk):
+    del_playlist = get_object_or_404(Playlist, pk=pk)
+    del_playlist.delete()
+    return redirect('my_info')
+
+
+def delete_song(request, play_pk, song_pk):
+    request.GET.get(Playlist)
+    select_playlist = get_object_or_404(Playlist, pk=play_pk)
+    del_pk = song_pk
+    song_list = select_playlist.play_list.split(',')
+    for i in song_list:
+        if str(del_pk) == i:
+            song_list.remove(str(del_pk))
+    new_list = ",".join(song_list)
+    select_playlist.play_list = new_list
+    select_playlist.save()
+    return redirect('my_info')
