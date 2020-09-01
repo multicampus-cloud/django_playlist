@@ -60,7 +60,7 @@ class SongForm(forms.ModelForm):
             'song_tag': forms.Select(choices=TAG_CHOICES, attrs={'class': 'form-control'}),
             'song_start': forms.TextInput(attrs={'class': 'form-control','placeholder':'시:분:초 형태로 입력\t\tex) 0분 0초   0:0'}),
             'song_end': forms.TextInput(attrs={'class': 'form-control','placeholder':'시:분:초 형태로 입력\t\tex) 1시간 5초   1:0:5'}),
-            'song_detail': forms.TextInput(attrs={'class': 'form-control'}),
+            'song_detail': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
             'song_title': '노래 제목',
