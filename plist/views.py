@@ -51,6 +51,8 @@ def list_new(request):
             # db에 넣기
             playlist = Playlist.objects.create(play_title=form.cleaned_data['play_title'],
                                                 author=request.user,
+                                                play_list='1,2',
+                                                play_detail='test'
                                         )
             return redirect('playlist')
         else:

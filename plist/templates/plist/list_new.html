@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'plist/base.html' %}
 {% block main %}
 {% load static %}
 {% load bootstrap4 %}
@@ -14,42 +14,30 @@
     </div>
 </section>
 
-<section class="events-area section-padding-100" style="border:1px solid blue">
-    <div class="row">
-        <div class="col-8" style="margin-left:10px">
-            <div class="one-music-songs-area mb-70">
-                <!-- row start -->
-                <div class="row">
-
-                        {% for list in song_list %}
-                            <div class="col-12">
-                                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                                    <div class="song-thumbnail">
-                                            <img src="/static/plist/img/artist/{{ list.song_thumbnail }}.jpg" alt="">
-                                    </div>
-                                    <div class="song-play-area" style="width:100px;">
-                                        <p>{{list.song_title}} {{list.song_artist}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
-                            <button type="submit" class="btn oneMusic-btn mt-30" onclick="javascript:show();">Register</button>
-                        </form>
-                        <!--  pagination.html 추가  -->
-                        <div class="col-12">
-                            {% include 'plist/pagination.html' with page=song_list %}
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Make your own playlist!</h3>
+                        <!-- Login Form -->
+                        <div class="login-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <button type="submit" class="btn oneMusic-btn mt-30" onclick="javascript:show();">Register</button>
+                            </form>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
 
 
 {% endblock %}
+
 
 {% block jquery %}
     <script type="text/javascript">
