@@ -15,14 +15,14 @@
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
             <p>Edit Your Own Playlist</p>
-            <h2></h2>
+            <h2>플레이리스트 상세정보</h2>
         </div>
     </section>
     <section>
         <div style="height: 70px"></div>
      </section>
      <!--##### Breadcumb Area End ##### -->
-     {% for list_dict in new_list %}
+     {% for list_dict in info_list %}
         <table id="testTable">
             <colgroup>
                 <col style="width: 80%">
@@ -40,6 +40,7 @@
                         <a href="{% url 'rename_playlist' pk=list_dict.my_playlist.pk %}">RENAME/</a>
                         <a href="{% url 'delete_playlist' pk=list_dict.my_playlist.pk %}">DELETE</a>
                     </td>
+                </tr>
                 <table id="testTable">
             <colgroup>
                 <col style="width: 50%">
@@ -53,7 +54,8 @@
                 <th> </th>
             </tr>
         </thead>
-            {% for song in list_dict.song_list %}
+            {% if list_dict.verify is True%}
+                {% for song in list_dict.song_list %}
                 <tr>
                     <td>{{ song.song_title }}</td>
                     <td>{{ song.song_artist }}</td>
@@ -62,7 +64,11 @@
                     </td>
                 </tr>
             {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">노래 리스트가 존재하지 않습니다.</td>
                 </tr>
+            {% endif %}
         </table>
              <section>
                 <div style="height: 70px"></div>

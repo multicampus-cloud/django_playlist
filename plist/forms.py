@@ -21,7 +21,7 @@ class PlaylistForm(forms.ModelForm):
         model = Playlist
         fields = ('play_title',)
         widgets = {
-            'play_title': forms.TextInput(attrs={'class': 'form-control'}),
+            'play_title': forms.TextInput(attrs={'class': 'form-control','placeholder':'플레이리스트 제목을 입력하세요'}),
         }
         labels = {
             'play_title': '',

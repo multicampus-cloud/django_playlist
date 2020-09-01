@@ -29,8 +29,12 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
-            <p>Make Your Own Playlist</p>
-            <h2>Register New Song</h2>
+            {% if user.is_active %}
+                <h3>{{user.username}} 님의</h3>
+            {% else %}
+                <h3>Unknown 님의</h3>
+            {% endif %}
+            <h2>New Song 만들기</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->

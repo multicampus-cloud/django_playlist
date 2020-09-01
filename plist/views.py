@@ -51,8 +51,8 @@ def list_new(request):
             # db에 넣기
             playlist = Playlist.objects.create(play_title=form.cleaned_data['play_title'],
                                                 author=request.user,
-                                                play_list='1,2',
-                                                play_detail='test',
+                                                play_list='empty',
+                                                play_detail='노래리스트가 없습니다.',
                                         )
             return redirect('playlist')
         else:
@@ -191,35 +191,21 @@ def event(request):
         list_dict = {}
         song_list = []
         # 디테일 리스트에 노래가 비어있으면 무시
-        if len(detail_list.play_list) == 0:
+        if detail_list.play_list == 'empty':
             continue
         # 디테일 리스트에 노래들이 있으면 노래들을 리스트로 패킹(아직은 키값으로 유지)
-        if detail_list.play_list:
+        else:
             song_id_list = detail_list.play_list.split(',')
-        # 리스트화된 노래들을 하나씩 뿌려줌(song에 있는 키값과 매칭)
-        for song_id in song_id_list:
-            song = get_object_or_404(Song, pk=song_id)
-            # song에 있는 노래들을 하나씪 뿌려줘서 개별적으로 나타냄 
-            song_list.append(song)
-        list_dict['my_playlist'] = detail_list
-        list_dict['song_list'] = song_list
-        eventlist.append(list_dict)
-    '''
-    print("event")
-    eventlist = Playlist.objects.all()
-    
-    song_list = []
-    for event in eventlist:
-        song_id_list = event.play_list.split(',')
-        for song_id in song_id_list:
-            song = get_object_or_404(Song, pk=song_id)
-            song_list.append(song)
-    
-    print("song_list")
-    print(song_list)
-    '''
-    return render(request, 'plist/event1.html', {'eventlist':eventlist})
+            # 리스트화된 노래들을 하나씩 뿌려줌(song에 있는 키값과 매칭)
+            for song_id in song_id_list:
+                song = get_object_or_404(Song, pk=song_id)
+                # song에 있는 노래들을 하나씪 뿌려줘서 개별적으로 나타냄
+                song_list.append(song)
+            list_dict['my_playlist'] = detail_list
+            list_dict['song_list'] = song_list
+            eventlist.append(list_dict)
 
+    return render(request, 'plist/event1.html', {'eventlist': eventlist})
 
 
 def blog(request):
@@ -258,12 +244,17 @@ def play_detail(request, pk):
     play_detail_list = get_object_or_404(Playlist, pk=pk)
 
     song_list = []
-    song_id_list = play_detail_list.play_list.split(',')
-    for song_id in song_id_list:
-        song = get_object_or_404(Song,pk=song_id)
-        song_list.append(song)
+    # song 추가되어 있을 경우에만 song객체 가져오기
+    if play_detail_list.play_list != 'empty':
+        song_id_list = play_detail_list.play_list.split(',')
+        for song_id in song_id_list:
+            song = get_object_or_404(Song,pk=song_id)
+            song_list.append(song)
+        verify = True
+    else:
+        verify = False
 
-    return render(request, 'plist/myPage/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list})
+    return render(request, 'plist/myPage/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list,'verify':verify})
 
 
 def search_title(request):
@@ -293,7 +284,6 @@ def search_artist(request):
 
 
 def search_genre(request):
-
     # return render(request,'plist/genre.html')
     kpops = Song.objects.filter(song_genre='0')
     r_bs = Song.objects.filter(song_genre='1')
@@ -349,22 +339,29 @@ def search_tag(request):
 
 def my_info(request):
     my_playlists = Playlist.objects.filter(author=request.user)
-    new_list = []
+    info_list = []
+
     for detail_list in my_playlists:
         list_dict = {}
         song_list = []
-        if len(detail_list.play_list) == 0:
-            continue
-        if detail_list.play_list:
+
+        if detail_list.play_list == 'empty':
+            verify = False
+        else:
+            verify = True
             song_id_list = detail_list.play_list.split(',')
-        for song_id in song_id_list:
-            song = get_object_or_404(Song, pk=song_id)
-            song_list.append(song)
+            for song_id in song_id_list:
+                song = get_object_or_404(Song, pk=song_id)
+                song_list.append(song)
+
         list_dict['my_playlist'] = detail_list
         list_dict['song_list'] = song_list
-        new_list.append(list_dict)
-    print(new_list)
-    return render(request, 'plist/myPage/my_info.html', {'new_list': new_list})
+        list_dict['verify'] = verify
+        info_list.append(list_dict)
+
+    # print(info_list)
+    return render(request, 'plist/myPage/my_info.html', {'info_list': info_list})
+
 
 def delete_playlist(request,pk):
     del_playlist = get_object_or_404(Playlist, pk=pk)
@@ -403,12 +400,23 @@ def rename_playlist(request,pk):
 
 def add_song(request, play_pk, song_pk,path_pk):
     new_playlist = get_object_or_404(Playlist, pk=play_pk)
-    song_list = new_playlist.play_list.split(',')
+
+    if new_playlist.play_list != 'empty':
+        song_list = new_playlist.play_list.split(',')
+        play_detail = new_playlist.play_detail+'\n'
+    else:
+        song_list = []
+        play_detail = ''
 
     if str(song_pk) not in song_list:
         song_list.append(str(song_pk))
         new_list = ",".join(song_list)
         new_playlist.play_list = new_list
+
+        song = get_object_or_404(Song,pk=song_pk)
+        play_detail += song.song_title
+        new_playlist.play_detail = play_detail
+
         new_playlist.save()
 
     # 1: playlist 로 보내기

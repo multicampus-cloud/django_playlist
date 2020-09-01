@@ -10,7 +10,7 @@
             {% else %}
                 <h3>Unknown 님의</h3>
             {% endif %}
-            <h2>play list</h2>
+            <h2>Song</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->
@@ -96,7 +96,7 @@
                                     <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                             </a></h6>
-                            <div id="collapse{{ play.id }}" class="accordion-content collapse">
+                            <div id="collapse{{ play.id }}" class="accordion-content collapse" style="overflow-y: auto;">
                                 <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail | linebreaksbr }}</a></p>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                        <div class="single-event-area mb-30">
                            <div class="event-text">
                                <h4>New Playlist</h4>
-                               <a href="{% url 'list_new' %}" class="btn see-more-btn"><button id="newItem">플레이리스트 추가</button></a>
+                               <a href="{% url 'list_new' %}" class="btn see-more-btn">플레이리스트 추가</a>
                            </div>
                        </div>
                     </div>

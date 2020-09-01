@@ -34,38 +34,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div hidden="hidden" class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
-                            <div class="first-part d-flex align-items-center">
-                                <div hidden="hidden" class="playlist">
-                                    <p><a href="http://localhost:8000/static/plist/audio/default.mp3"></a></p>
-                                </div>
-                                {% if user.is_active %}
-                                    <div class="single-web-icon" style="border:none;height:80px;">
-                                        <a href="{% url 'list_copy' pk=play_detail_list.pk %}"><i class="icon-like" style="width: 100%"></i></a>
-                                    </div>
-                                    <div style="height:80px;padding-top:45px;">
-                                        <a href="{% url 'list_copy' pk=play_detail_list.pk %}">{{user.username }} 플레이 리스트에 추가</a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% for song in song_list %}
-                            <!-- Single Top Item -->
-                            <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                        {% if verify is True%}
+                            <div hidden="hidden" class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
                                 <div class="first-part d-flex align-items-center">
-                                    <div class="thumbnail">
-                                        <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                                    <div hidden="hidden" class="playlist">
+                                        <p><a href="http://localhost:8000/static/plist/audio/default.mp3"></a></p>
                                     </div>
-                                    <div class="content- playlist">
-                                        <h6>{{ song.song_artist}}</h6>
-                                        <p><a href="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">{{ song.song_title }}</a></p>
-                                    </div>
+                                    {% if user.is_active %}
+                                        <div class="single-web-icon" style="border:none;height:80px;">
+                                            <a href="{% url 'list_copy' pk=play_detail_list.pk %}"><i class="icon-like" style="width: 100%"></i></a>
+                                        </div>
+                                        <div style="height:80px;padding-top:45px;">
+                                            <a href="{% url 'list_copy' pk=play_detail_list.pk %}">{{user.username }} 님의 플레이 리스트에 추가</a>
+                                        </div>
+                                    {% endif %}
                                 </div>
-                                <audio preload="auto" controls loop="loop">
-                                    <source type="audio/mp3" src="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">
-                                </audio>
                             </div>
-                        {% endfor %}
+                            {% for song in song_list %}
+                                <!-- Single Top Item -->
+                                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                                    <div class="first-part d-flex align-items-center">
+                                        <div class="thumbnail">
+                                            <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                                        </div>
+                                        <div class="content- playlist">
+                                            <h6>{{ song.song_artist}}</h6>
+                                            <p><a href="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">{{ song.song_title }}</a></p>
+                                        </div>
+                                    </div>
+                                    <audio preload="auto" controls loop="loop">
+                                        <source type="audio/mp3" src="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">
+                                    </audio>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            해당 플레이리스트에는 노래가 존재하지 않습니다.
+                            노래 먼저 추가해주세요.
+                        {% endif %}
                     </div>
                 </div>
             </div>
