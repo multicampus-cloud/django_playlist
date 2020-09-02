@@ -51,8 +51,8 @@
                         </div>
 
                         <!-- Menu -->
+                        <div class="classy-menu">
 
-                        <div class="classy-m
                             <!-- Close Button -->
                             <div class="classycloseIcon">
                                 <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
@@ -61,21 +61,21 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="{% url 'index' %}">Home</a></li>
+                                    <li><a href="{% url 'index' %}">Home </a></li>
                                     <li><a href="#">Search</a>
-                                            <ul class="dropdown">
-                                                <li><a href="{% url 'title' %}">title</a></li>
-                                                <li><a href="{% url 'artist' %}">artist</a></li>
-                                                <li><a href="{% url 'genre' %}">genre</a></li>
-                                                <li><a href="{% url 'tag' %}">tag</a></li>
-                                            </ul>
+                                        <ul class="dropdown">
+                                            <li><a href="{% url 'title' %}">Title</a></li>
+                                            <li><a href="{% url 'artist' %}">Artist</a></li>
+                                            <li><a href="{% url 'genre' %}">Genre</a></li>
+                                            <li><a href="{% url 'tag' %}">Tag</a></li>
+                                        </ul>
                                     </li>
                                     <li><a href="{% url 'event' %}">All Playlist</a></li>
                                     <li><a href="#">MyPage</a>
                                         <ul class="dropdown">
-                                            <li><a href="{% url 'song_new' %}">Add Song</a></li>
-                                            <li><a href="{% url 'list_new' %}">Add Playlist</a></li>
-                                            <li><a href="{% url 'playlist'%}">My Song</a></li>
+                                            <li><a href="{% url 'song_new' %}">Add New Song</a></li>
+                                            <li><a href="{% url 'list_new'%}">Add New Playlist</a></li>
+                                            <li><a href="{% url 'playlist' %}">My Song</a></li>
                                             <li><a href="{% url 'my_info' %}">My Playlist</a></li>
                                         </ul>
                                     </li>
@@ -131,16 +131,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                 </div>
 
-{#                <div class="col-12 col-md-6">#}
+                <div class="col-12 col-md-6">
 {#                    <div class="footer-nav">#}
 {#                        <ul>#}
 {#                            <li><a href="{% url 'index' %}">Home</a></li>#}
 {#                            <li><a href="{% url 'album' %}">Albums</a></li>#}
 {#                            <li><a href="{% url 'event' %}">Events</a></li>#}
-{#                            <li><a href="{% url 'element' %}">element</a></li>#}
+{#                            <li><a href="{% url 'blog' %}">News</a></li>#}
+{#                            <li><a href="{% url 'contact' %}">Contact</a></li>#}
 {#                        </ul>#}
 {#                    </div>#}
-{#                </div>#}
+                </div>
             </div>
         </div>
     </footer>
