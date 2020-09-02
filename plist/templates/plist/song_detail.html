@@ -5,8 +5,8 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
-            <p>Make Your Own Playlist</p>
-            <h2>Song Detail</h2>
+            <p>Show Song You Like</p>
+            <h2>노래 상세정보</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->
@@ -28,10 +28,10 @@
                                 <h2>{{song.song_title}}</h2>
                                 <h6 style="color:white">{{song.song_artist}}</h6>
                             </div>
-                            <p>song url : <a href="{{song.song_url}}" style="color:white;">{{song.song_url}}</a></p>
-                            <p> song start time : {{song.song_start}}</p>
-                            <p> song end time : {{song.song_end}}</p>
-                            <p>song detail : {{song.song_detail}}</p>
+                            <p> youtube URL : <a href="{{song.song_url}}" style="color:white;">{{song.song_url}}</a></p>
+                            <p> 노래 시작시간(youtube URL 기준) : {{song.song_start}}</p>
+                            <p> 노래 종료시간(youtube URL 기준) : {{song.song_end}}</p>
+                            <p> 노래 상세정보 : {{song.song_detail}}</p>
                             <div class="song-play-area">
                                 <div class="song-name">
                                     <p>{{song.song_title}}</p>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="widget-content">
                                 <ul>
-                                    <li><a href="#">{{genre}}</a></li>
+                                    <li><a href="{% url 'genre' %}">{{genre}}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -66,14 +66,14 @@
                             </div>
                             <div class="widget-content">
                                 <ul class="tags">
-                                    <li><a href="#">{{tag}}</a></li>
+                                    <li><a href="{% url 'tag' %}">{{tag}}</a></li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="single-widget-area mb-30">
                             <div class="widget-title">
-                                <h5>Recommend Playlist in Youtube</h5>
+                                <h5>추천 곡 in Youtube</h5>
                             </div>
                             <div class="widget-content">
                                 {% for recommend in recommend_list%}
