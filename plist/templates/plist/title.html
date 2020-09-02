@@ -22,20 +22,18 @@
                 </form>
             </div>
             {% for song in songs %}
-                {{ song.song_title }}
-                {{ song.song_artist }}
                 <br>
                 <div class="col-12">
                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
                         <div class="song-thumbnail">
-                            <a href="{% url 'song_detail' pk=song.pk%}">
+                            <a href="{% url 'song_detail' pk=song.id%}">
                                 <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
                             </a>
                         </div>
                         <div class="song-play-area">
                             <div class="col-10" style="float:left;">
                                 <div class="song-name">
-                                    <a href="{% url 'song_detail' pk=song.pk%}">
+                                    <a href="{% url 'song_detail' pk=song.id%}">
                                         <p style="font-size:20px;float:left;">{{song.song_title}} <p style="font-size:15px;float:left;padding-top:7px;">&nbsp;&nbsp;({{ song.song_artist }})</p></p>
                                     </a>
                                 </div>
@@ -51,7 +49,7 @@
                                             <li><a href="#" style="font-size:20px;color:white"><i class="icon-inbox"></i>&nbsp;추가</a>
                                                 <ul class="dropdown">
                                                     {% for play in play_list %}
-                                                    <li><a href="{% url 'add_song' play_pk=play.pk song_pk=song.pk path_pk=3 %}">{{ play.play_title}}</a></li>
+                                                    <li><a href="{% url 'add_song' play_pk=play.pk song_pk=song.id path_pk=3 %}">{{ play.play_title}}</a></li>
                                                     {% endfor %}
                                                  </ul>
                                             </li>
