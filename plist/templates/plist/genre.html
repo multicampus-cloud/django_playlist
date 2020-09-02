@@ -1,6 +1,15 @@
 {% extends './base.html' %}
 {% block main %}
 {% load static %}
+    <style>
+
+        #oneMusic-buttons-area mb-100{
+            background-color: blue;
+        }
+        .bbtn {
+            color: #c2c0c0
+        }
+    </style>
 
     <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb2.jpg' %});">
@@ -21,15 +30,14 @@
 
                     <!-- Buttons -->
                     <div class="oneMusic-buttons-area mb-100">
-                        <buttonkpop id="kpop" class="btn oneMusic-btn m-2">K-POP <i class="fa fa-angle-double-right"></i></buttonkpop>
-                        <buttonrb id="rb" class="btn oneMusic-btn m-2">R&B <i class="fa fa-angle-double-right"></i></buttonrb>
-                        <buttonpop id="pop" class="btn oneMusic-btn m-2">POP <i class="fa fa-angle-double-right"></i></buttonpop>
-                        <buttonjazz id="jazz" href="#" class="btn oneMusic-btn m-2">JAZZ <i class="fa fa-angle-double-right"></i></buttonjazz>
-                        <buttonindi id="indi" class="btn oneMusic-btn m-2">INDI <i class="fa fa-angle-double-right"></i></buttonindi>
-                        <buttondan id="dance" class="btn oneMusic-btn m-2">DANCE <i class="fa fa-angle-double-right"></i></buttondan>
-                        <buttonhip id="hiphop" class="btn oneMusic-btn m-2">HIPHOP <i class="fa fa-angle-double-right"></i></buttonhip>
-                        <buttonelse id="else" class="btn oneMusic-btn m-2">ELSE <i class="fa fa-angle-double-right"></i></buttonelse>
-                        <buttonall id="all" class="btn oneMusic-btn btn-2 m-2">ALL </buttonall>
+                        <kpop><button id="kpop" class="bbtn oneMusic-btn m-2"> K-POP <i class="fa fa-angle-double-right"></i></button></kpop>
+                        <rb><button id="rb" class="bbtn oneMusic-btn m-2">R&B <i class="fa fa-angle-double-right"></i></button></rb>
+                        <pop><button id="pop" class="bbtn oneMusic-btn m-2">POP <i class="fa fa-angle-double-right"></i></button></pop>
+                        <jazz><button id="jazz" href="#" class="bbtn oneMusic-btn m-2">DANCE <i class="fa fa-angle-double-right"></i></button></jazz>
+                        <indi><button id="indi" class="bbtn oneMusic-btn m-2">INDI <i class="fa fa-angle-double-right"></i></button></indi>
+                        <hiphop><button id="hiphop" class="bbtn oneMusic-btn m-2">HIPHOP <i class="fa fa-angle-double-right"></i></button></hiphop>
+                        <else><button id="else" class="bbtn oneMusic-btn m-2">ELSE <i class="fa fa-angle-double-right"></i></button></else>
+                        <all><button id="all" class="btn oneMusic-btn m-2">ALL <i class="fa fa-angle-double-right"></i></button></all>
                     </div>
 
                     <p0>
@@ -237,6 +245,7 @@
                             </div>
                         {% endfor %}
                     </p4>
+
                     <p5>
                         {% for song in dances %}
                             <div class="col-12">
@@ -278,6 +287,7 @@
                             </div>
                         {% endfor %}
                     </p5>
+
                     <p6>
                         {% for song in hiphops %}
                             <div class="col-12">
@@ -373,59 +383,128 @@
 {% block jquery %}
     <script type="text/javascript">
         $(document).ready(function(){
-      $("buttonkpop").click(function(){
-        $("p0").toggle();
+            c0 = true;
+      $("#kpop").click(function(){
+        if(c0){
+            $("p0").toggle();
+            $("#kpop").css("color","black")
+            c0=false;
+        } else{
+            $("p0").toggle();
+            $("#kpop").css("color","#c2c0c0")
+            c0=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonrb").click(function(){
-        $("p1").toggle();
+            c1=true;
+      $("#rb").click(function(){
+        if(c1){
+            $("p1").toggle();
+            $("#rb").css("color","black")
+            c1=false;
+        } else{
+            $("p1").toggle();
+            $("#rb").css("color","#c2c0c0")
+            c1=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonpop").click(function(){
-        $("buttonpop").css("color","#d49a9a");
-        $("p2").toggle();
-        $(this).css("color","#c2c0c0");
+            c2=true;
+       $("#pop").click(function(){
+        if(c2){
+            $("p2").toggle();
+            $("#pop").css("color","black")
+            c2=false;
+        } else{
+            $("p2").toggle();
+            $("#pop").css("color","#c2c0c0")
+            c2=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonjazz").click(function(){
-        $("p3").toggle();
+            c3=true;
+      $("#jazz").click(function(){
+        if(c3){
+            $("p3").toggle();
+            $("#jazz").css("color","black")
+            c3=false;
+        } else{
+            $("p3").toggle();
+            $("#jazz").css("color","#c2c0c0")
+            c3=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonindi").click(function(){
-        $("p4").toggle();
+            c4=true;
+      $("#indi").click(function(){
+        if(c4){
+            $("p4").toggle();
+            $("#indi").css("color","black")
+            c4=false;
+        } else{
+            $("p4").toggle();
+            $("#indi").css("color","#c2c0c0")
+            c4=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttondan").click(function(){
-        $("p5").toggle();
+            c6=true;
+      $("#hiphop").click(function(){
+        if(c6){
+            $("p6").toggle();
+            $("#hiphop").css("color","black")
+            c6=false;
+        } else{
+            $("p6").toggle();
+            $("#hiphop").css("color","#c2c0c0")
+            c6=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonhip").click(function(){
-        $("p6").toggle();
+            c7=true;
+      $("#else").click(function(){
+        if(c7){
+            $("p7").toggle();
+            $("#else").css("color","black")
+            c7=false;
+        } else{
+            $("p7").toggle();
+            $("#else").css("color","#c2c0c0")
+            c7=true;
+        }
       });
     });
         $(document).ready(function(){
-      $("buttonelse").click(function(){
-        $("p7").toggle();
-      });
-    });
-        $(document).ready(function(){
-      $("buttonall").click(function(){
-        $("p0").toggle();
-        $("p1").toggle();
-        $("p2").toggle();
-        $("p3").toggle();
-        $("p4").toggle();
-        $("p5").toggle();
-        $("p6").toggle();
-        $("p7").toggle();
+            c8=true;
+      $("#all").click(function(){
+        if(c8){
+            $("p0").toggle();
+            $("p1").toggle();
+            $("p2").toggle();
+            $("p3").toggle();
+            $("p4").toggle();
+            $("p6").toggle();
+            $("p7").toggle();
+            $("#all").css("color","#c2c0c0")
+            c8=false;
+        } else{
+            $("p0").toggle();
+            $("p1").toggle();
+            $("p2").toggle();
+            $("p3").toggle();
+            $("p4").toggle();
+            $("p6").toggle();
+            $("p7").toggle();
+            $("#all").css("color","black")
+            c8=true;
+        }
       });
     });
     </script>
-
 {% endblock %}
