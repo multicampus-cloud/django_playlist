@@ -18,4 +18,6 @@ class SongDocument(Document):
             'song_artist',
             'song_genre',
             'song_tag',
+            'song_thumbnail',
+            'id',
         ]
