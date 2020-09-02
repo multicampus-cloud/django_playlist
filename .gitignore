@@ -1,10 +1,10 @@
 ### Pycharm ###
-.idea/
+.idea
 ./venv
 .vscode
 .idea
 mydatabase
-plist/migrations/
+__pychache__
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode
 
