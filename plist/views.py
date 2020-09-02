@@ -401,7 +401,7 @@ def rename_playlist(request,pk):
         return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
 
 
-def add_song(request, play_pk, song_pk,path_pk):
+def add_song(request, play_pk, song_pk, path_pk):
     new_playlist = get_object_or_404(Playlist, pk=play_pk)
     song_list = new_playlist.play_list.split(',')
 
