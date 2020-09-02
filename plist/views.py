@@ -174,7 +174,31 @@ def song_detail(request,pk):
 
 # 메인 페이지
 def index(request):
-    return render(request, 'plist/index.html')
+    my_song_list = Song.objects.all()
+    
+    # 전체 플레이 리스트 데이터를 가져옴
+    event_all_list = Playlist.objects.all()
+    eventlist = []
+    # 전체 플레이 리스트 데이터만큼 디테일을 만듬
+    for detail_list in event_all_list:
+        list_dict = {}
+        song_list = []
+        # 디테일 리스트에 노래가 비어있으면 무시
+        if detail_list.play_list == 'empty':
+            continue
+        # 디테일 리스트에 노래들이 있으면 노래들을 리스트로 패킹(아직은 키값으로 유지)
+        else:
+            song_id_list = detail_list.play_list.split(',')
+            # 리스트화된 노래들을 하나씩 뿌려줌(song에 있는 키값과 매칭)
+            for song_id in song_id_list:
+                song = get_object_or_404(Song, pk=song_id)
+                # song에 있는 노래들을 하나씪 뿌려줘서 개별적으로 나타냄
+                song_list.append(song)
+            list_dict['my_playlist'] = detail_list
+            list_dict['song_list'] = song_list
+            eventlist.append(list_dict)
+            eventlist = eventlist[-3:]
+    return render(request, 'plist/index.html', {'eventlist': eventlist, 'my_song_list':my_song_list})
 
 
 def album(request):
@@ -418,6 +442,7 @@ def add_song(request, play_pk, song_pk, path_pk):
         new_playlist.play_detail = play_detail
 
         new_playlist.save()
+
 
     # 1: playlist 로 보내기
     if path_pk == 1:
