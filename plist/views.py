@@ -166,7 +166,6 @@ def song_detail(request,pk):
     song_genre = GENRE_CHOICES[int(song.song_genre)]
     # 추천 노래 리스트 받아오기
     recommend_list = recommend_song_list(song.song_url)
-    # print(recommend_list)
     return render(request, 'plist/song_detail.html', \
                   {'song': song,'genre':song_genre[1], 'tag':song_tag[1],\
                    'recommend_list':recommend_list})
@@ -175,7 +174,7 @@ def song_detail(request,pk):
 # 메인 페이지
 def index(request):
     my_song_list = Song.objects.all()
-    
+
     # 전체 플레이 리스트 데이터를 가져옴
     event_all_list = Playlist.objects.all()
     eventlist = []

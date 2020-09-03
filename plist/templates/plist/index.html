@@ -14,9 +14,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="hero-slides-content text-center">
-                                <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Beyond Time <span>Beyond Time</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <h6 data-animation="fadeInUp" data-delay="100ms">Bring song in YouTube </h6>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Whatever you want <span>Whatever you want </span></h2>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="{% url 'song_new' %}" class="btn oneMusic-btn mt-50">Let's start now <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -32,9 +32,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="hero-slides-content text-center">
-                                <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Colorlib Music <span>Colorlib Music</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <h6 data-animation="fadeInUp" data-delay="100ms">Bring song in YouTube </h6>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Whatever you want <span>Whatever you want </span></h2>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="{% url 'song_new' %}" class="btn oneMusic-btn mt-50">Let's start now <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                 <div class="col-12">
                     <div class="section-heading style-2">
                         <p>See what’s new</p>
-                        <h2>Latest Albums</h2>
+                        <h2>Latest Songs</h2>
                     </div>
                 </div>
             </div>
@@ -76,24 +76,23 @@
                                 <p>Second Song</p>
                             </div>
                         </div>
-
+                        
                         {% for song in my_song_list %}
-                        <div class="col-12">
-                            <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                                <div class="song-thumbnail">
-                                    <a href="{% url 'song_detail' pk=song.pk%}">
-                                        <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="song-play-area">
-                                    <div class="col-10" style="float:left;">
-                                        <div class="song-name">
-                                            <a href="{% url 'song_detail' pk=song.pk%}">
-                                                <p style="font-size:20px;float:left;">{{song.song_title}} <p style="font-size:15px;float:left;padding-top:7px;">&nbsp;&nbsp;({{ song.song_artist }})</p></p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="single-album">
+                            <a href="{% url 'song_detail' pk=song.pk%}">
+
+                                {% if song.song_thumbnail == 'default' %}
+                                <img src="/static/plist/img/artist/default.png" alt="">
+                                {% endif %}
+
+                                <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                            </a>
+
+                            <div class="album-info">
+                                <a href="{% url 'song_detail' pk=song.pk%}">
+                                    <h5>{{song.song_title}}</h5>
+                                </a>
+                                <p>&nbsp;&nbsp;{{ song.song_artist }}</p>
                             </div>
                         </div>
                         {% endfor %}
