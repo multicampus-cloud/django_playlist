@@ -42,6 +42,7 @@ class UserCreateView(CreateView):
     success_url = "/"
 
 
+@login_required
 def list_new(request):
     song_list = Song.objects.all()
     if request.method == "POST":
@@ -64,6 +65,7 @@ def list_new(request):
 
 
 # 다른 사람 플레이 리스트 -> 내 플레이리스트에 추가
+@login_required
 def list_copy(request,pk):
     # 다른 사람 플레이리스트 가져오기
     playlist = get_object_or_404(Playlist,pk=pk)
@@ -105,18 +107,6 @@ def login(request):
     else:
         form = LoginForm()
         return render(request, 'registration/login.html', {'form': form})
-
-
-def signup(request):
-    if request.method == "POST":
-        form = UserForm(request.POST)
-        if form.is_valid():
-            new_user = User.objects.create_user(**form.cleaned_data)
-            # login(request, new_user)
-            return redirect('index')
-    else:
-        form = UserForm()
-        return render(request, 'registration/signup.html', {'form': form})
 
 
 # new song 만들기
@@ -200,11 +190,6 @@ def index(request):
     return render(request, 'plist/index.html', {'eventlist': eventlist, 'my_song_list':my_song_list})
 
 
-def album(request):
-    return render(request, 'plist/album.html')
-
-
-
 def event(request):
     # 전체 플레이 리스트 데이터를 가져옴
     event_all_list = Playlist.objects.all()
@@ -229,14 +214,6 @@ def event(request):
             eventlist.append(list_dict)
 
     return render(request, 'plist/event1.html', {'eventlist': eventlist})
-
-
-def blog(request):
-    return render(request, 'plist/blog.html')
-
-
-def element(request):
-    return render(request, 'plist/element.html')
 
 
 # mypage 안에 my playlist 가져오기(모든 노래가져오기) + playlist 목록 가져오기
@@ -280,6 +257,7 @@ def play_detail(request, pk):
     return render(request, 'plist/myPage/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list,'verify':verify})
 
 
+@login_required
 def search_title(request):
     q = request.GET.get('q')
     if q:
@@ -293,6 +271,7 @@ def search_title(request):
     return render(request, 'plist/title.html',{'songs':songs,'play_list':play_list})
 
 
+@login_required
 def search_artist(request):
     a = request.GET.get('a')
     if a:
@@ -306,6 +285,7 @@ def search_artist(request):
     return render(request, 'plist/artist.html', {'singer':singer,'play_list':play_list})
 
 
+@login_required
 def search_genre(request):
     # return render(request,'plist/genre.html')
     kpops = Song.objects.filter(song_genre='0')
@@ -335,6 +315,7 @@ def search_genre(request):
                    })
 
 
+@login_required
 def search_tag(request):
     # return render(request,'plist/genre.html')
     tag_0 = Song.objects.filter(song_tag='0')
@@ -360,6 +341,7 @@ def search_tag(request):
                    })
 
 
+@login_required
 def my_info(request):
     my_playlists = Playlist.objects.filter(author=request.user)
     info_list = []
@@ -386,12 +368,14 @@ def my_info(request):
     return render(request, 'plist/myPage/my_info.html', {'info_list': info_list})
 
 
+@login_required
 def delete_playlist(request,pk):
     del_playlist = get_object_or_404(Playlist, pk=pk)
     del_playlist.delete()
     return redirect('my_info')
 
 
+@login_required
 def delete_song(request, play_pk, song_pk):
     select_playlist = get_object_or_404(Playlist, pk=play_pk)
     del_pk = song_pk
@@ -405,6 +389,7 @@ def delete_song(request, play_pk, song_pk):
     return redirect('my_info')
 
 
+@login_required
 def rename_playlist(request,pk):
     re_playlist = get_object_or_404(Playlist, pk=pk)
     if request.method == "POST":
@@ -421,6 +406,7 @@ def rename_playlist(request,pk):
         return render(request, 'plist/myPage/rename_playlist.html', {'form': form})
 
 
+@login_required
 def add_song(request, play_pk, song_pk, path_pk):
     new_playlist = get_object_or_404(Playlist, pk=play_pk)
 
