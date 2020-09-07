@@ -445,4 +445,24 @@ def add_song(request, play_pk, song_pk, path_pk):
     elif path_pk == 5:
         return redirect('tag')
 
+def myinfo_songlist(request):
+    if request.user.id == 5:
+        song_list = Song.objects.all()
+    else:
+        song_list = Song.objects.filter(author=request.user)
+    return render(request,'plist/myPage/songlist.html',{'song_list':song_list})
 
+
+def remove_song(request, pk):
+    songs_list = Song.objects.filter(author=request.user)
+    if request.user.id == 5:
+        for song in songs_list:
+            if song.id == pk:
+                songs_list.remove(song)
+                song.delete()
+    # else:
+    #     for song in songs_list:
+    #         if song.id == pk:
+    #             song.author = 'project'
+    #             song.save()
+    return redirect('songs')

@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
     # 'default': {
     # 'ENGINE': 'django.db.backends.mysql',
     # 'NAME': 'project_db', # DB명
@@ -124,17 +124,18 @@ DATABASES = {
     #         'charset': 'utf8'  # This is the important line
     #         }
     # }
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'project_db', # DB명
-    'USER': 'project', # 데이터베이스 계정
-    'PASSWORD':'project', # 계정 비밀번호
-    'HOST':'192.168.0.8', # 데이테베이스 IP
-    'PORT':'3306', # 데이터베이스 port
-    'OPTIONS': {
-            'charset': 'utf8'  # This is the important line
-            }
-    }
+
+    # 'default': {
+    # 'ENGINE': 'django.db.backends.mysql',
+    # 'NAME': 'project_db', # DB명
+    # 'USER': 'project', # 데이터베이스 계정
+    # 'PASSWORD':'project', # 계정 비밀번호
+    # 'HOST':'192.168.0.4', # 데이테베이스 IP
+    # 'PORT':'3306', # 데이터베이스 port
+    # 'OPTIONS': {
+    #         'charset': 'utf8'  # This is the important line
+    #         }
+    # }
 
     # MongoDB 연동
     # 'default': {
@@ -146,13 +147,13 @@ DATABASES = {
     #     'PORT': '27017',  # 데이터베이스 포트(보통은 27017)
     # }
 
-}
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
-#     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
 
 
 # Password validation

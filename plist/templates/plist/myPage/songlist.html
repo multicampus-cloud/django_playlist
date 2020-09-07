@@ -1,0 +1,57 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+    <style>
+        #testTable { width:500px; margin:auto; border-collapse: collapse; }
+        #testTable th,
+        #testTable td {padding: 5px 12px; text-align: center;border:1px solid #ccc;}
+        #testTable th {background: #eee;}
+        #playlist .active a{color:#5DB0E6;text-decoration:none;}
+        #playlist li a,#playlist_detail li a{color:darkslategray;padding:5px;display:block;}
+        #playlist li a:hover{text-decoration:none;}
+    </style>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p><a href="{% url 'my_info' %}"> Edit Your Own Playlist</a></p>
+            <h2>다운받은 노래정보</h2>
+        </div>
+    </section>
+    <section>
+        <div style="height: 70px"></div>
+     </section>
+     <!--##### Breadcumb Area End ##### -->
+        <table id="testTable">
+            <colgroup>
+                <col style="width: 50%">
+                <col style="width: 30%">
+                <col style="width: 20%">
+            </colgroup>
+        <thead>
+            <tr>
+                <th>Song Title</th>
+                <th>Song Artist</th>
+                <th>Song Info </th>
+            </tr>
+        </thead>
+            {% for song in song_list %}
+                <tr>
+                    <td>{{ song.song_title }}</td>
+                    <td>{{ song.song_artist }}</td>
+                    <td>
+                        <a href="{% url 'song_detail' pk=song.pk %}">More</a>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+             <section>
+                <div style="height: 70px"></div>
+             </section>
+
+
+     <section>
+        <div style="height: 300px"></div>
+     </section>
+
+    {% endblock %}

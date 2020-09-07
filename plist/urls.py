@@ -23,4 +23,6 @@ urlpatterns = [
     path('myPage/myInfo/delete/<int:play_pk>/<int:song_pk>/', views.delete_song, name='delete_song'),
     path('myPage/myInfo/rename/<int:pk>/',views.rename_playlist,name='rename_playlist'),
     path('add/song/<int:play_pk>/<int:song_pk>/<int:path_pk>/', views.add_song, name='add_song'),
+    path('myPage/myInfo/songs/', views.myinfo_songlist, name='songs'),
+    path('myPage/myInfo/songs/<int:pk>/',views.remove_song,name='remove_song'),
 ]
