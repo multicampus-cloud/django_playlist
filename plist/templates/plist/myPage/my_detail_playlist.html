@@ -1,0 +1,83 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+    <style>
+        #testTable { width:500px; margin:auto; border-collapse: collapse; }
+        #testTable th,
+        #testTable td {padding: 5px 12px; text-align: center;border:1px solid #ccc;}
+        #testTable th {background: #eee;}
+        #playlist .active a{color:#5DB0E6;text-decoration:none;}
+        #playlist li a,#playlist_detail li a{color:darkslategray;padding:5px;display:block;}
+        #playlist li a:hover{text-decoration:none;}
+    </style>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p><a href="{% url 'songs' %}">Edit Your Own Songs</a></p>
+            <h2>플레이리스트 상세정보</h2>
+        </div>
+    </section>
+    <section>
+        <div style="height: 70px"></div>
+     </section>
+     <!--##### Breadcumb Area End ##### -->
+     {% for list_dict in info_list %}
+        <table id="testTable">
+            <colgroup>
+                <col style="width: 80%">
+                <col style="width: 20%">
+            </colgroup>
+        <thead>
+            <tr>
+                <th>Playlist name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+                <tr>
+                    <td>{{ list_dict.my_playlist}}</td>
+                    <td>
+                        <a href="{% url 'rename_playlist' pk=list_dict.my_playlist.pk %}">RENAME/</a>
+                        <a href="{% url 'delete_playlist' pk=list_dict.my_playlist.pk %}">DELETE</a>
+                    </td>
+                </tr>
+                <table id="testTable">
+            <colgroup>
+                <col style="width: 50%">
+                <col style="width: 30%">
+                <col style="width: 20%">
+            </colgroup>
+        <thead>
+            <tr>
+                <th>Song Title</th>
+                <th>Song Artist</th>
+                <th> </th>
+            </tr>
+        </thead>
+            {% if list_dict.verify is True%}
+                {% for song in list_dict.song_list %}
+                <tr>
+                    <td>{{ song.song_title }}</td>
+                    <td>{{ song.song_artist }}</td>
+                    <td>
+                        <a href="{% url 'delete_song' play_pk=list_dict.my_playlist.pk song_pk=song.pk %}">DELETE</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">노래 리스트가 존재하지 않습니다.</td>
+                </tr>
+            {% endif %}
+        </table>
+             <section>
+                <div style="height: 70px"></div>
+             </section>
+
+    {% endfor %}
+
+     <section>
+        <div style="height: 300px"></div>
+     </section>
+
+    {% endblock %}

@@ -1,0 +1,66 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <h3>모든 사용자의</h3>
+            <h2>play list</h2>
+        </div>
+    </section>
+
+    
+    <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+
+                {% for event in eventlist %}
+
+                <div class="col-sm-4">
+                    <div class="new-hits-area mb-70" style="width: 350px; height: 500px; overflow-y: auto;">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>{{ event.my_playlist.author }} 님의 </p>
+                            <h2><a href="{% url 'play_detail' pk=event.my_playlist.pk %}">{{event.my_playlist.play_title }}</a></h2>
+                        </div>
+
+                        
+                            {% for song in event.song_list %}
+                            
+                                <!-- Single Top Item -->
+                                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                                    
+                                    <div class="first-part d-flex align-items-center">
+                                        <div class="thumbnail">
+                                            <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                                        </div>
+                                        <div class="content- playlist">
+                                            <h6>{{ song.song_artist}}</h6>
+                                            <p><a href="{% url 'song_detail' pk=song.pk %}">{{ song.song_title }}</a></p>
+                                        </div>
+                                    </div>
+                                    <audio preload="auto" controls loop="loop">
+                                        <source type="audio/mp3" src="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">
+                                    </audio>
+                                </div>
+                            
+                            {% endfor %}
+                        
+
+                    </div>
+                </div>
+            
+                {% endfor %}
+                
+                <div class="row">
+                    <div class="col-12">
+                        <div class="load-more-btn text-center mt-70">
+                        
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

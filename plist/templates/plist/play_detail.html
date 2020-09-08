@@ -1,0 +1,131 @@
+{% extends './base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Play Your Own Playlist</p>
+            <h2>{{ play_detail_list.play_title }}</h2>
+        </div>
+    </section>
+     <!--##### Breadcumb Area End ##### -->
+
+    <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- ***** New Hits Songs ***** -->
+                <div class="col-12 col-lg-3" style="float:left;"></div>
+                <div class="col-12 col-lg-6" style="float:left;">
+                    <div class="row">
+                        <div class="col-12">
+                            <audio autoplay="autoplay" preload="auto" tabindex="0" controls="controls" type="audio/mpeg">
+                                <source id="audio" type="audio/mp3" src="http://localhost:8000/static/plist/audio/default.mp3">
+                                Sorry, your browser doesn't support HTML5 audio.
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="new-hits-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p>Play Your Own Playlist</p>
+                                    <h2>{{play_detail_list.play_title }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {% if verify is True%}
+                            <div hidden="hidden" class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                                <div class="first-part d-flex align-items-center">
+                                    <div hidden="hidden" class="playlist">
+                                        <p><a href="http://localhost:8000/static/plist/audio/default.mp3"></a></p>
+                                    </div>
+                                    {% if user.is_active %}
+                                        <div class="single-web-icon" style="border:none;height:80px;">
+                                            <a href="{% url 'list_copy' pk=play_detail_list.pk %}"><i class="icon-like" style="width: 100%"></i></a>
+                                        </div>
+                                        <div style="height:80px;padding-top:45px;">
+                                            <a href="{% url 'list_copy' pk=play_detail_list.pk %}">{{user.username }} 님의 플레이 리스트에 추가</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% for song in song_list %}
+                                <!-- Single Top Item -->
+                                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                                    <div class="first-part d-flex align-items-center">
+                                        <div class="thumbnail">
+                                            <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                                        </div>
+                                        <div class="content- playlist">
+                                            <h6>{{ song.song_artist}}</h6>
+                                            <p><a href="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">{{ song.song_title }}</a></p>
+                                        </div>
+                                    </div>
+                                    <audio preload="auto" controls loop="loop">
+                                        <source type="audio/mp3" src="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">
+                                    </audio>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            해당 플레이리스트에는 노래가 존재하지 않습니다.
+                            노래 먼저 추가해주세요.
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
+
+    {% block jquery %}
+        <!--참고 : http://jsfiddle.net/lastrose/vkMqR/-->
+        <script type="text/javascript" src={% static "plist/js/jquery/jquery-3.3.1.min.js" %}></script>
+        <script>
+            $( document ).ready(function() {
+                $.getScript('{% static "plist/js/plugins/plugins.js"%}');
+            });
+        </script>
+
+        <script type="text/javascript">
+            jQuery.noConflict();
+            var audio;
+            var playlist;
+            var tracks;
+            var current;
+
+            init();
+            function init(){
+                current = 0;
+                audio = jQuery('audio');
+                playlist = jQuery('.playlist');
+                tracks = playlist.find('p a');
+                len = tracks.length;
+                audio[0].volume = .10;
+                playlist.find('a').click(function(e){
+                    e.preventDefault();
+                    link = jQuery(this);
+                    current = link.parent().index();
+                    run(link, audio[0]);
+                });
+                audio[0].addEventListener('ended',function(e){
+                    current++;
+                    if(current == len){
+                        current = 0;
+                        link = playlist.find('a')[0];
+                    }else{
+                        link = playlist.find('a')[current];
+                    }
+                    run(jQuery(link),audio[0]);
+                });
+            }
+            function run(link, player){
+                    player.src = link.attr('href');
+                    par = link.parent();
+                    //par.addClass('active').siblings().removeClass('active');
+                    audio[0].load();
+                    audio[0].play();
+            }
+        </script>
+    {% endblock %}

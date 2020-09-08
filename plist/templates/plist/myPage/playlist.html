@@ -2,140 +2,69 @@
 {% block main %}
 {% load static %}
 
-    <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
-            {% if user.is_active %}
-                <h3>{{user.username}} 님의</h3>
-            {% else %}
-                <h3>Unknown 님의</h3>
-            {% endif %}
-            <h2>Song</h2>
+            <h3>My Playlist</h3>
+            <h2>내 플레이리스트</h2>
         </div>
     </section>
-    <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Song List Area Start ##### -->
-    <section class="events-area section-padding-100">
-        <div class="row">
-            <!-- ##### Song Area Start ##### -->
 
-            <div class="col-8" style="margin-left:10px">
-                <div class="one-music-songs-area mb-70">
-                    <!-- row start -->
-                    <div class="row">
-                        {% if user.is_active %}
-                            {% for song in song_list %}
-                                <div class="col-12">
-                                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                                        <div class="song-thumbnail">
-                                            <a href="{% url 'song_detail' pk=song.pk%}">
-                                                <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
-                                            </a>
+    <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+
+                {% for play in play_list %}
+
+                <div class="col-sm-4">
+                    <div class="new-hits-area mb-70" style="width: 350px; height: 500px; overflow-y: auto;">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p> </p>
+                            <h2><a href="{% url 'play_detail' pk=play.my_playlist.pk %}">{{play.my_playlist.play_title }}</a></h2>
+                        </div>
+                        {% if play.verify is True %}
+
+                            {% for song in play.song_list %}
+
+                                <!-- Single Top Item -->
+                                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+
+                                    <div class="first-part d-flex align-items-center">
+                                        <div class="thumbnail">
+                                            <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
                                         </div>
-                                        <div class="song-play-area">
-                                            <div class="col-10" style="float:left;">
-                                                <div class="song-name">
-                                                    <a href="{% url 'song_detail' pk=song.pk%}">
-                                                        <p style="font-size:20px;float:left;">{{song.song_title}} <p style="font-size:15px;float:left;padding-top:7px;">&nbsp;&nbsp;({{ song.song_artist }})</p></p>
-                                                    </a>
-                                                </div>
-                                                <audio preload="auto" controls="controls">
-                                                    <source src="/static/plist/audio/{{song.song_title}}.mp3">
-                                                </audio>
-                                            </div>
-
-                                            <div class="col-2" style="float:left;">
-                                                <div class="classy-nav-container breakpoint-off" style="background-color: #262626;">
-                                                    <div class="classynav" id="oneMusicNav">
-                                                        <ul>
-                                                            <li><a href="#" style="font-size:20px;color:white"><i class="icon-inbox"></i>&nbsp;추가</a>
-                                                                <ul class="dropdown">
-                                                                    {% for play in play_list %}
-                                                                        
-                                                                        <li><a href="{% url 'add_song' play_pk=play.pk song_pk=song.pk path_pk=1 %}">{{ play.play_title}}</a></li>
-                                                                        
-                                                                    {% endfor %}
-                                                                 </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="content- playlist">
+                                            <h6>{{ song.song_artist}}</h6>
+                                            <p><a href="{% url 'song_detail' pk=song.pk %}">{{ song.song_title }}</a></p>
                                         </div>
                                     </div>
+                                    <audio preload="auto" controls loop="loop">
+                                        <source type="audio/mp3" src="http://localhost:8000/static/plist/audio/{{ song.song_title }}.mp3">
+                                    </audio>
                                 </div>
+
                             {% endfor %}
-                            <!--  pagination.html 추가  -->
-                            <div class="col-12">
-                                {% include 'plist/pagination.html' with page=song_list %}
-                            </div>
+                        {% else %}
+                            해당 플레이리스트에는 노래가 존재하지 않습니다.
+                            노래 먼저 추가해주세요.
+                            <button type="" class="btn oneMusic-btn mt-30""><a href="{% url 'genre' %}">노래추가하러가기</a></button>
                         {% endif %}
-                    </div> <!-- row end -->
-                </div>
-            </div>
-            <!-- ##### Song Area end ##### -->
 
-
-            <!-- ##### Playlist Start ##### -->
-            <div class="col-3" style="min-width:200px;">
-                <!-- ##### 아코디언 리스트 ##### -->
-                <div class="col-12 col-lg-12">
-                    <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
-                        <!-- single accordian area -->
-                        <div class="panel single-accordion">
-                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Playlist 목록
-                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                    </a></h6>
-                            <div id="collapseOne" class="accordion-content collapse show">
-                                <p>이 부분을 선택하면 플레이리스트 재생화면으로 이동합니다.</p>
-                            </div>
-                        </div>
-                        {% for play in play_list %}
-                            <div class="panel single-accordion">
-                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapse{{ play.id }}" data-parent="#accordion" data-toggle="collapse" href="#collapse{{ play.id }}">{{ play.play_title }}
-                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                            </a></h6>
-                            <div id="collapse{{ play.id }}" class="accordion-content collapse" style="overflow-y: auto;">
-                                <p><a href="{% url 'play_detail' pk=play.pk %}">{{ play.play_detail | linebreaksbr }}</a></p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                       <div class="single-event-area mb-30">
-                           <div class="event-text">
-                               <h4>New Playlist</h4>
-                               <a href="{% url 'list_new' %}" class="btn see-more-btn">플레이리스트 추가</a>
-                           </div>
-                       </div>
                     </div>
-                </div> <!-- ##### 아코디언 리스트 끝 ##### -->
+                </div>
+
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="load-more-btn text-center mt-70">
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <!-- ##### Playlist End ##### -->
         </div>
     </section>
-    <!-- ##### Song List Area End ##### -->
 
-{% endblock %}
-{% block jquery %}
-    <script>
-        $(function(){
-            
-            console.log($single_accordion);
-            
-            $('#newItem').on('click', function(e){
-                e.preventDefault();
-                var $single_accordion = $("<div class='panel single-accordion'>\
-                <h6><a role='button' class='' aria-expanded='true' aria-controls='collapseOne' data-toggle='collapse' data-parent='#accordion' href='#collapseOne'>Playlist 1\
-                                    <span class='accor-open'><i class='fa fa-plus' aria-hidden='true'></i></span>\
-                                    <span class='accor-close'><i class='fa fa-minus' aria-hidden='true'></i></span>\
-                                    </a></h6>\
-                            <div id='collapseOne' class='accordion-content collapse show'>\
-                            </div>\
-                        </div>");
-                $('.single-accordion:last').after($single_accordion);
-            });
-        });
-    </script>
 {% endblock %}

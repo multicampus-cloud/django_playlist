@@ -1,0 +1,73 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/imgbg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Artist Search</p>
+            <h2>가수 검색</h2>
+        </div>
+
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Album Catagory Area Start ##### -->
+    <section class="album-catagory section-padding-100-0">
+        <div class="container">
+            <div class="formtag">
+                <form method="get"><font size="4.5em">Search for Artist</font>
+                    <input id="a" name="a" type="text" placeholder="input Artist..."/>
+                </form>
+            </div>
+            {% for song in singer %}
+                <br>
+                <div class="col-12">
+                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                        <div class="song-thumbnail">
+                            <a href="{% url 'song_detail' pk=song.id%}">
+                                <img src="/static/plist/img/artist/{{ song.song_thumbnail }}.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="song-play-area">
+                            <div class="col-10" style="float:left;">
+                                <div class="song-name">
+                                    <a href="{% url 'song_detail' pk=song.id%}">
+                                        <p style="font-size:20px;float:left;">{{song.song_title}} <p style="font-size:15px;float:left;padding-top:7px;">&nbsp;&nbsp;({{ song.song_artist }})</p></p>
+                                    </a>
+                                </div>
+                                <audio preload="auto" controls="controls">
+                                    <source src="/static/plist/audio/{{song.song_title}}.mp3">
+                                </audio>
+                            </div>
+
+
+
+                                <div class="col-2" style="float:left;">
+                                    <div class="classy-nav-container breakpoint-off" style="background-color: #262626;">
+                                        <div class="classynav" id="oneMusicNav">
+                                            <ul>
+                                                <li><a href="#" style="font-size:20px;color:white"><i class="icon-inbox"></i>&nbsp;추가</a>
+                                                    <ul class="dropdown">
+                                                        {% for play in play_list %}
+                                                        <li><a href="{% url 'add_song' play_pk=play.pk song_pk=song.id path_pk=2 %}">{{ play.play_title}}</a></li>
+                                                        {% endfor %}
+                                                     </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <div style="height: 150px"></div>
+    </section>
+{% endblock %}

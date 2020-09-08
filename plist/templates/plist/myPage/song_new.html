@@ -1,0 +1,75 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+{% load bootstrap4 %}
+    <style>
+        #loading {
+             width: 100%;
+             height: 100%;
+             top: 0px;
+             left: 0px;
+             position: fixed;
+             display: block;
+             opacity: 0.7;
+             background-color: #fff;
+             z-index: 99;
+             text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            z-index: 100;
+        }
+    </style>
+
+    <!--Loading Image-->
+    <div id="loading"><img id="loading-image" src="{% static 'plist/img/spinner.gif' %}" alt="Loading..." /></div>
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            {% if user.is_active %}
+                <h3>{{user.username}} 님의</h3>
+            {% else %}
+                <h3>Unknown 님의</h3>
+            {% endif %}
+            <h2>New Song 만들기</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Show Your Favorite Song From Youtube</h3>
+                        <!-- Register Form -->
+                        <div class="login-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <button type="submit" class="btn oneMusic-btn mt-30" onclick="javascript:show();">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Login Area End ##### -->
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('#loading').hide();
+        });
+        function show() {
+          $('#loading').show();
+        }
+    </script>
+    <!--출처: https://hunit.tistory.com/309 [Ara Blog]-->
+{% endblock %}

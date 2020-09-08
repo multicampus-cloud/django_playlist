@@ -1,16 +1,16 @@
 from .forms import SongForm,UserForm, LoginForm, PlaylistForm
 from .models import Song, Playlist
-from .download import download_video_and_subtitle
-from .slice import find_sec, song_slice
-from .get_artist_thumbnail import get_thumbnail
-from .youtube_recommend import recommend_song_list
+from plist.feature.mp3_download import download_video_and_subtitle
+from plist.feature.mp3_slice import song_slice
+from plist.feature.get_artist_thumbnail import get_thumbnail
+from plist.feature.youtube_recommend import recommend_song_list
 from .documents import SongDocument
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
-from django.contrib.auth import views, models, login, authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -53,7 +53,7 @@ def list_new(request):
             playlist = Playlist.objects.create(play_title=form.cleaned_data['play_title'],
                                                 author=request.user,
                                                 play_list='empty',
-                                                play_detail='노래리스트가 없습니다.',
+                                                play_detail='',
                                         )
             return redirect('playlist')
         else:
@@ -61,7 +61,7 @@ def list_new(request):
     
     else:
         form = PlaylistForm()
-        return render(request, 'plist/list_new.html', {'form':form, 'song_list':song_list})
+        return render(request, 'plist/myPage/playlist_new.html', {'form':form, 'song_list':song_list})
 
 
 # 다른 사람 플레이 리스트 -> 내 플레이리스트에 추가
@@ -70,10 +70,10 @@ def list_copy(request,pk):
     # 다른 사람 플레이리스트 가져오기
     playlist = get_object_or_404(Playlist,pk=pk)
     # 로그인 사용자 계정으로 플레이리스트 db에 추가
-    playlist = Playlist.objects.create(play_title=playlist.play_title,
+    playlist = Playlist.objects.create(play_title=str(playlist.author)+'의 플레이리스트\n'+playlist.play_title+'copy',
                             author=request.user,
                             play_list=playlist.play_list,
-                            play_detail=str(playlist.author)+'의 플레이리스트 copy',
+                            play_detail='',
                             )
 
     return redirect('playlist')
@@ -146,7 +146,7 @@ def song_new(request):
             return HttpResponse('문제가 발생했습니다. 다시 시도해 주세요.')
     else:
         form = SongForm()
-        return render(request, 'plist/song_new.html', {'form': form})
+        return render(request, 'plist/myPage/song_new.html', {'form': form})
 
 
 # 특정 song detail 정보 가져오기
@@ -190,7 +190,7 @@ def index(request):
     return render(request, 'plist/index.html', {'eventlist': eventlist, 'my_song_list':my_song_list})
 
 
-def event(request):
+def playlist_all(request):
     # 전체 플레이 리스트 데이터를 가져옴
     event_all_list = Playlist.objects.all()
     eventlist = []
@@ -213,28 +213,35 @@ def event(request):
             list_dict['song_list'] = song_list
             eventlist.append(list_dict)
 
-    return render(request, 'plist/event1.html', {'eventlist': eventlist})
+    return render(request, 'plist/all_playlist.html', {'eventlist': eventlist})
 
 
-# mypage 안에 my playlist 가져오기(모든 노래가져오기) + playlist 목록 가져오기
 @login_required
 def playlist(request):
-    # 페이지 별로 구분해서 리스트 출력하기
-    song_list = Song.objects.filter(author=request.user)
-    # song_list 목록에서 한페이지당 2개씩 할당
-    paginator = Paginator(song_list, 5)
-    # page 받아오기
-    page = request.GET.get('page')
+    # 전체 플레이 리스트 데이터를 가져옴
+    event_all_list = Playlist.objects.filter(author=request.user)
+    play_list = []
+    # 전체 플레이 리스트 데이터만큼 디테일을 만듬
+    for detail_list in event_all_list:
+        list_dict = {}
+        song_list = []
+        # 디테일 리스트에 노래가 비어있으면 무시
+        if detail_list.play_list == 'empty':
+            list_dict['verify'] = False
+            list_dict['song_list'] = song_list
+        # 디테일 리스트에 노래들이 있으면 노래들을 리스트로 패킹(아직은 키값으로 유지)
+        else:
+            list_dict['verify'] = True
+            song_id_list = detail_list.play_list.split(',')
+            # 리스트화된 노래들을 하나씩 뿌려줌(song에 있는 키값과 매칭)
+            for song_id in song_id_list:
+                song = get_object_or_404(Song, pk=song_id)
+                # song에 있는 노래들을 하나씪 뿌려줘서 개별적으로 나타냄
+                song_list.append(song)
+            list_dict['song_list'] = song_list
 
-    try:
-        song_list = paginator.page(page)
-    except PageNotAnInteger:
-        song_list = paginator.page(1)
-    except EmptyPage:
-        song_list = paginator.page(paginator.num_pages)
-
-    # 플레이리스트 가져오기
-    play_list = Playlist.objects.filter(author=request.user)
+        list_dict['my_playlist'] = detail_list
+        play_list.append(list_dict)
 
     return render(request, 'plist/myPage/playlist.html', {'song_list': song_list, 'play_list': play_list})
 
@@ -254,7 +261,7 @@ def play_detail(request, pk):
     else:
         verify = False
 
-    return render(request, 'plist/myPage/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list,'verify':verify})
+    return render(request, 'plist/play_detail.html', {'play_detail_list': play_detail_list, 'song_list':song_list, 'verify':verify})
 
 
 @login_required
@@ -268,7 +275,7 @@ def search_title(request):
     # 플레이리스트 가져오기
     play_list = Playlist.objects.filter(author=request.user)
 
-    return render(request, 'plist/title.html',{'songs':songs,'play_list':play_list})
+    return render(request, 'plist/search/title.html', {'songs':songs, 'play_list':play_list})
 
 
 @login_required
@@ -282,7 +289,7 @@ def search_artist(request):
     # 플레이리스트 가져오기
     play_list = Playlist.objects.filter(author=request.user)
 
-    return render(request, 'plist/artist.html', {'singer':singer,'play_list':play_list})
+    return render(request, 'plist/search/artist.html', {'singer':singer, 'play_list':play_list})
 
 
 @login_required
@@ -302,7 +309,7 @@ def search_genre(request):
     # 플레이리스트 가져오기
     play_list = Playlist.objects.filter(author=request.user)
 
-    return render(request, 'plist/genre.html',
+    return render(request, 'plist/search/genre.html',
                   {'kpops': kpops,
                    'pops': pops,
                    'r_bs': r_bs,
@@ -329,7 +336,7 @@ def search_tag(request):
     # 플레이리스트 가져오기
     play_list = Playlist.objects.filter(author=request.user)
 
-    return render(request, 'plist/tag.html',
+    return render(request, 'plist/search/tag.html',
                   {'tag_0': tag_0,
                    'tag_1': tag_1,
                    'tag_2': tag_2,
@@ -365,7 +372,7 @@ def my_info(request):
         info_list.append(list_dict)
 
     # print(info_list)
-    return render(request, 'plist/myPage/my_info.html', {'info_list': info_list})
+    return render(request, 'plist/myPage/my_detail_playlist.html', {'info_list': info_list})
 
 
 @login_required
@@ -412,10 +419,8 @@ def add_song(request, play_pk, song_pk, path_pk):
 
     if new_playlist.play_list != 'empty':
         song_list = new_playlist.play_list.split(',')
-        play_detail = new_playlist.play_detail+'\n'
     else:
         song_list = []
-        play_detail = ''
 
     if str(song_pk) not in song_list:
         song_list.append(str(song_pk))
@@ -423,8 +428,6 @@ def add_song(request, play_pk, song_pk, path_pk):
         new_playlist.play_list = new_list
 
         song = get_object_or_404(Song,pk=song_pk)
-        play_detail += song.song_title
-        new_playlist.play_detail = play_detail
 
         new_playlist.save()
 
@@ -450,7 +453,7 @@ def myinfo_songlist(request):
         song_list = Song.objects.all()
     else:
         song_list = Song.objects.filter(author=request.user)
-    return render(request,'plist/myPage/songlist.html',{'song_list':song_list})
+    return render(request, 'plist/myPage/my_detail_songlist.html', {'song_list':song_list})
 
 
 def remove_song(request, pk):

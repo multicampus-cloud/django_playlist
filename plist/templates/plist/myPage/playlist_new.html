@@ -1,0 +1,52 @@
+{% extends '../base.html' %}
+{% block main %}
+{% load static %}
+{% load bootstrap4 %}
+
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'plist/img/bg-img/breadcumb3.jpg' %});">
+    <div class="bradcumbContent">
+        {% if user.is_active %}
+            <h3>{{user.username}} 님의</h3>
+        {% else %}
+            <h3>Unknown 님의</h3>
+        {% endif %}
+        <h2>New Playlist 만들기</h2>
+    </div>
+</section>
+
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Make your own playlist!</h3>
+                        <!-- Login Form -->
+                        <div class="login-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <button type="submit" class="btn oneMusic-btn mt-30" onclick="javascript:show();">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}
+
+
+{% block jquery %}
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('#loading').hide();
+        });
+        function show() {
+          $('#loading').show();
+        }
+    </script>
+    <!--출처: https://hunit.tistory.com/309 [Ara Blog]-->
+{% endblock %}
