@@ -391,8 +391,16 @@ def delete_song(request, play_pk, song_pk):
         if str(del_pk) == i:
             song_list.remove(str(del_pk))
     new_list = ",".join(song_list)
-    select_playlist.play_list = new_list
+
+    # 노래 제거 후 빈 리스트라면 empty값 넣어주기
+    if not new_list:
+        select_playlist.play_list = 'empty'
+    # 노래가 있다면 수정하기
+    else:
+        select_playlist.play_list = new_list
+
     select_playlist.save()
+
     return redirect('my_info')
 
 
@@ -431,10 +439,9 @@ def add_song(request, play_pk, song_pk, path_pk):
 
         new_playlist.save()
 
-
-    # 1: playlist 로 보내기
+    # 1: tag 로 보내기
     if path_pk == 1:
-        return redirect('playlist')
+        return redirect('tag')
     # 2: artist 로 보내기
     elif path_pk == 2:
         return redirect('artist')
@@ -444,9 +451,8 @@ def add_song(request, play_pk, song_pk, path_pk):
     # 4: genre 로 보내기
     elif path_pk == 4:
         return redirect('genre')
-    # 5: tag 로 보내기
-    elif path_pk == 5:
-        return redirect('tag')
+
+
 
 def myinfo_songlist(request):
     if request.user.id == 5:
