@@ -8,9 +8,9 @@ Subject : Make Your Own Playlist with Youtube
 
 YouTube에서 음악들을 저장해서 나만의 플레이 리스트를 만들 수 있는 사이트입니다.
 
-url에서 시작지점과 끝지점을 지정해서 원하는 음악을 mp3 파일로 저장하고, 
+url에서 시작지점과 끝지점을 지정해서 원하는 음악을 mp3 파일로 저장 가능하고, 
 
-저장된 음악을 검색할 수 있습니다.
+저장된 음악을 검색할 수 있습니다. 궁극적으로 저장된 음악들로 플레이리스트를 만들 수 있습니다.
 
 
 
@@ -80,6 +80,5 @@ Django, MariaDB, ElasticSearch, Requests, BeautifulSoup, FFmpeg
 
 #### (음악 저장 및 검색) 실행영상
 
-<video src="./imges/123.mp4"></video>
-
+[![실행영상]](https://user-images.githubusercontent.com/17541671/105449181-2d162d80-5cbb-11eb-9f09-0ce034d20ab2.mp4)
 
