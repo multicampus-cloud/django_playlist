@@ -83,7 +83,7 @@ TEMPLATES = [
 ]
 
 # CORS
-CORS_ORIGIN_ALLOW_ALL=True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = (
@@ -113,6 +113,7 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DATABASES = {
+<<<<<<< HEAD
     # 'default': {
     # 'ENGINE': 'django.db.backends.mysql',
     # 'NAME': 'project_db', # DB명
@@ -134,6 +135,41 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
     #     'HOST': '192.168.0.12',  # 데이테베이스 주소(IP)
     #     'PORT': '27017',  # 데이터베이스 포트(보통은 27017)
     # }
+=======
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'project_db',  # DB명
+#         'USER': 'project',  # 데이터베이스 계정
+#         'PASSWORD': 'project',  # 계정 비밀번호
+#         'HOST': '192.168.0.4',  # 데이테베이스 IP
+#         'PORT': '3306',  # 데이터베이스 port
+#         'OPTIONS': {
+#             'charset': 'utf8'  # This is the important line
+#         }
+#     }
+
+# 'default': {
+# 'ENGINE': 'django.db.backends.mysql',
+# 'NAME': 'project_db', # DB명
+# 'USER': 'project', # 데이터베이스 계정
+# 'PASSWORD':'project', # 계정 비밀번호
+# 'HOST':'192.168.0.4', # 데이테베이스 IP
+# 'PORT':'3306', # 데이터베이스 port
+# 'OPTIONS': {
+#         'charset': 'utf8'  # This is the important line
+#         }
+# }
+
+# MongoDB 연동
+# 'default': {
+#     'ENGINE': 'djongo',
+#     'NAME': 'project_db',
+#     'USER': 'project',  # 데이터베이스 계정
+#     'PASSWORD': 'project',  # 계정 비밀번호
+#     'HOST': '192.168.0.12',  # 데이테베이스 주소(IP)
+#     'PORT': '27017',  # 데이터베이스 포트(보통은 27017)
+# }
+>>>>>>> cf6f76fb12b6193396b72db52aebce799f2b621a
 
 # }
 DATABASES = {
@@ -183,4 +219,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 LOGIN_REDIRECT_URL = '/'
-
