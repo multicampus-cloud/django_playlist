@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Song,Playlist
+from .models import *
+from django.contrib.auth.models import User
 
 admin.site.register(Song)
 admin.site.register(Playlist)
-
