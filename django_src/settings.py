@@ -116,14 +116,11 @@ WSGI_APPLICATION = 'django_src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'project_db',  # DB명
-        'USER': 'admin',  # 데이터베이스 계정
-        'PASSWORD': '123456789a',  # 계정 비밀번호
-        'HOST': 'database-1.cddap876hkki.us-east-1.rds.amazonaws.com',  # 데이테베이스 IP
-        'PORT': '3306',  # 데이터베이스 port
-        'OPTIONS': {
-            'charset': 'utf8'  # This is the important line
-        }
+        'NAME': os.environ.get('DJANGO_DB_NAME', 'project_db'),
+        'USER': os.environ.get('DJANGO_DB_USERNAME', 'project'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', 'project'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
     }
 
     # 'default': {
@@ -131,7 +128,7 @@ DATABASES = {
     #     'NAME': 'project_db',  # DB명
     #     'USER': 'project',  # 데이터베이스 계정
     #     'PASSWORD': 'project',  # 계정 비밀번호
-    #     'HOST': '192.168.35.169',  # 데이테베이스 IP
+    #     'HOST': '192.168.35.169',  # 호스트 IP
     #     'PORT': '3306',  # 데이터베이스 port
     #     'OPTIONS': {
     #         'charset': 'utf8'  # This is the important line
