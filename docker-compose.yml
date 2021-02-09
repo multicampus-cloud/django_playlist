@@ -1,0 +1,28 @@
+version: '3'
+services:
+  # DB 컨테이너 이름 정의
+  database:
+    # db 서비스에서 사용할 도커 이미지
+    image: 'mariadb'
+    environment:
+      - MYSQL_ROOT_PASSWORD=project
+      - MYSQL_DATABASE=project_db
+      - MYSQL_USER=project
+      - MYSQL_PASSWORD=project
+
+  # 앱 컨테이너 이름 정의
+  backend:
+    depends_on:
+      - database
+    # Dockerfile이 있는 위치
+    build: .
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - '8000:8000'
+    environment:
+      - DJANGO_DB_HOST=database
+      - DJANGO_DEBUG=True
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+      - discovery.type=single-node
+    command: ./server_start.sh
